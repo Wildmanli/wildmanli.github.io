@@ -5,19 +5,19 @@
   
 
   
-  <title>Blog</title>
+  <title>Redis简述 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title: Redis简述REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(Stri">
+  <meta name="description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash),">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Blog">
+<meta property="og:title" content="Redis简述">
 <meta property="og:url" content="http://www.wildmanli.top/2019/04/01/redis-simple-description/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="title: Redis简述REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(Stri">
+<meta property="og:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash),">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-01T09:34:17.953Z">
+<meta property="og:updated_time" content="2019-04-01T09:37:13.998Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
-<meta name="twitter:description" content="title: Redis简述REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(Stri">
+<meta name="twitter:title" content="Redis简述">
+<meta name="twitter:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash),">
   
     <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -71,20 +71,29 @@
         <section id="main"><article id="post-redis-simple-description" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/01/redis-simple-description/" class="article-date">
-  <time datetime="2019-04-01T09:34:17.953Z" itemprop="datePublished">2019-04-01</time>
+  <time datetime="2019-04-01T09:37:13.998Z" itemprop="datePublished">2019-04-01</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis简述
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h1 id="title-Redis简述"><a href="#title-Redis简述" class="headerlink" title="title: Redis简述"></a>title: Redis简述</h1><p>REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。<br>Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。<br>它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。</p>
-<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>Redis支持五种类型数据结构：string，list，hash，set，zset。</p>
-<h2 id="Redis-String类型"><a href="#Redis-String类型" class="headerlink" title="Redis String类型"></a>Redis String类型</h2><p>string类型的数据存储是最简单的key-value存储</p>
-<h3 id="操作命令"><a href="#操作命令" class="headerlink" title="操作命令"></a>操作命令</h3><figure class="highlight plain"><figcaption><span>[SET操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; SET &quot;key&quot; &quot;value&quot; [EX seconds] [PX milliseconds] [NX|XX]</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+        <p>REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。<br>Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。<br>它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>Redis支持五种类型数据结构：string，list，hash，set，zset。</p>
+<h3 id="Redis-String类型"><a href="#Redis-String类型" class="headerlink" title="Redis String类型"></a>Redis String类型</h3><p>string类型的数据存储是最简单的key-value存储</p>
+<h4 id="操作命令"><a href="#操作命令" class="headerlink" title="操作命令"></a>操作命令</h4><figure class="highlight plain"><figcaption><span>[SET操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; SET &quot;key&quot; &quot;value&quot; [EX seconds] [PX milliseconds] [NX|XX]</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
 <p>从 Redis 2.6.12 版本开始， SET 命令的行为可以通过一系列参数来修改:</p>
 <ol>
 <li>EX seconds ： 将键的过期时间设置为 seconds 秒。 执行 SET key value EX seconds 的效果等同于执行 SETEX key seconds value 。  </li>
@@ -95,21 +104,21 @@
 <figure class="highlight plain"><figcaption><span>[GET操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; GET &quot;key&quot;</span><br><span class="line">&quot;value&quot;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><figcaption><span>[EXISTS操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; EXISTS &quot;key&quot; [&quot;key&quot; ...]</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><figcaption><span>[DEL操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; DEL &quot;key&quot; [&quot;key&quot; ...]</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a></p>
-<h2 id="Redis-List类型"><a href="#Redis-List类型" class="headerlink" title="Redis List类型"></a>Redis List类型</h2><p>List数据结构是链表结构，是双向的，可以在链表左，右两边分别操作，列表允许重复数据；<br>也可以把list看成一种队列，所以在很多时候可以用redis用作消息队列，这个时候它的作用就类似于activeMq；<br>应用案例有时间轴数据，评论列表，消息传递等等，它可以提供简便的分页，读写操作。</p>
-<h3 id="操作命令-1"><a href="#操作命令-1" class="headerlink" title="操作命令"></a>操作命令</h3><figure class="highlight plain"><figcaption><span>[LPUSH操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; LPUSH &quot;key&quot; &quot;value&quot; [&quot;value&quot; ...]</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a></p>
+<h3 id="Redis-List类型"><a href="#Redis-List类型" class="headerlink" title="Redis List类型"></a>Redis List类型</h3><p>List数据结构是链表结构，是双向的，可以在链表左，右两边分别操作，列表允许重复数据；<br>也可以把list看成一种队列，所以在很多时候可以用redis用作消息队列，这个时候它的作用就类似于activeMq；<br>应用案例有时间轴数据，评论列表，消息传递等等，它可以提供简便的分页，读写操作。</p>
+<h4 id="操作命令-1"><a href="#操作命令-1" class="headerlink" title="操作命令"></a>操作命令</h4><figure class="highlight plain"><figcaption><span>[LPUSH操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; LPUSH &quot;key&quot; &quot;value&quot; [&quot;value&quot; ...]</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
 <p>将一个或多个值 value 插入到列表 key 的表头：</p>
 <ol>
 <li>如果有多个 value 值，那么各个 value 值按从左到右的顺序依次插入到表头： 比如说，对空列表 mylist 执行命令 LPUSH mylist a b c ，列表的值将是 c b a ，这等同于原子性地执行 LPUSH mylist a 、 LPUSH mylist b 和 LPUSH mylist c 三个命令。</li>
 <li>如果 key 不存在，一个空列表会被创建并执行 LPUSH 操作。</li>
 <li>当 key 存在但不是列表类型时，返回一个错误。</li>
 </ol>
-<h3 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a></p>
-<h2 id="Redis-Hash类型"><a href="#Redis-Hash类型" class="headerlink" title="Redis Hash类型"></a>Redis Hash类型</h2><h2 id="Redis-Set类型"><a href="#Redis-Set类型" class="headerlink" title="Redis Set类型"></a>Redis Set类型</h2><h2 id="Redis-Zset类型"><a href="#Redis-Zset类型" class="headerlink" title="Redis Zset类型"></a>Redis Zset类型</h2>
+<h4 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a></p>
+<h3 id="Redis-Hash类型"><a href="#Redis-Hash类型" class="headerlink" title="Redis Hash类型"></a>Redis Hash类型</h3><h3 id="Redis-Set类型"><a href="#Redis-Set类型" class="headerlink" title="Redis Set类型"></a>Redis Set类型</h3><h3 id="Redis-Zset类型"><a href="#Redis-Zset类型" class="headerlink" title="Redis Zset类型"></a>Redis Zset类型</h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/01/redis-simple-description/" data-id="cjty5q2gp0001o9tx9hkytrwu" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/01/redis-simple-description/" data-id="cjty5tudw0001pctx6yrv3h25" class="article-share-link">Share</a>
       
       
     </footer>
@@ -158,7 +167,7 @@
       <ul>
         
           <li>
-            <a href="/2019/04/01/redis-simple-description/">(no title)</a>
+            <a href="/2019/04/01/redis-simple-description/">Redis简述</a>
           </li>
         
           <li>
