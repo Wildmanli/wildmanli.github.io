@@ -3,7 +3,7 @@ title: Redis简述
 ---
 REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。   
 Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。   
-它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。
+它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表(list)，集合(sets) 和 有序集合(sorted sets)等类型。
 ## 数据结构
 Redis支持五种类型数据结构：string，list，hash，set，zset。
 ### Redis String类型
@@ -72,6 +72,28 @@ redis> LRANGE "key" start stop
 1. 当start为0，stop为 1：返回数组包含下标为0到1共2个元素。
 2. 当start为0，stop为-1：返回第0个至倒数第一个,相当于返回所有元素,注意redis中很多时候会用到负数。
 
+{% codeblock [LPOP操作] %}
+redis> LPOP "key"
+"value"
+{% endcodeblock %}
+
+{% codeblock [RPOP操作] %}
+redis> RPOP "key"
+"value"
+{% endcodeblock %}
+
+{% codeblock [LREM操作] %}
+redis> LREM "key" "count" "value"
+(integer) 3
+{% endcodeblock %}
+
+根据参数 count 的值，移除列表中与参数 value 相等的元素。
+count 的值可以是以下几种：
+1. count > 0 : 从表头开始向表尾搜索，移除与 value 相等的元素，数量为 count；
+2. count < 0 : 从表尾开始向表头搜索，移除与 value 相等的元素，数量为 count 的绝对值；（所以不存在RREM命令）
+3. count = 0 : 移除表中所有与 value 相等的值。
+
+
 #### 参考链接
 [redis 五种数据结构详解](https://www.cnblogs.com/sdgf/p/6244937.html)
 [Redis命令参考](http://redisdoc.com/string/index.html)
@@ -82,8 +104,15 @@ redis中hash表存储数据，比较类似数据库中表的一条记录。
 
 #### 操作命令
 {% codeblock [HSET操作] %}
-redis> HSET "key" "field" "value"
+redis> HSET "key" "field" "value" ["field" "value" ...]
 (integer) 1
+{% endcodeblock %}
+
+{% codeblock [HKEYS操作] %}
+redis> HKEYS "key"
+"field1"
+"field2"
+...
 {% endcodeblock %}
 
 {% codeblock [HGET操作] %}
