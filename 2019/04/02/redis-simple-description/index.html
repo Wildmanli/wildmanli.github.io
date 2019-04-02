@@ -14,10 +14,12 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-02T02:37:27.274Z">
+<meta property="og:image" content="http://www.wildmanli.top/images/redis-simple-description/redis-RDB.png">
+<meta property="og:updated_time" content="2019-04-02T05:48:08.613Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis简述">
 <meta name="twitter:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表">
+<meta name="twitter:image" content="http://www.wildmanli.top/images/redis-simple-description/redis-RDB.png">
   
     <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -71,7 +73,7 @@
         <section id="main"><article id="post-redis-simple-description" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/02/redis-simple-description/" class="article-date">
-  <time datetime="2019-04-02T02:37:27.274Z" itemprop="datePublished">2019-04-02</time>
+  <time datetime="2019-04-02T05:48:08.612Z" itemprop="datePublished">2019-04-02</time>
 </a>
     
   </div>
@@ -160,11 +162,24 @@
 </ol>
 <figure class="highlight plain"><figcaption><span>[ZREM操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; ZREM &quot;key&quot; &quot;member&quot; [&quot;member&quot; ...]</span><br><span class="line">(integer) 2</span><br></pre></td></tr></table></figure>
 <h4 id="参考链接-4"><a href="#参考链接-4" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a><br><a href="https://redis.io/topics/data-types#sorted-sets" target="_blank" rel="noopener">更多sorted-sets介绍</a></p>
+<h2 id="Redis持久存储方案"><a href="#Redis持久存储方案" class="headerlink" title="Redis持久存储方案"></a>Redis持久存储方案</h2><p>Redis服务提供四种持久化存储方案：RDB、AOF、虚拟内存（VM）和　DISKSTORE;<br><a href="https://redis.io/topics/persistence" target="_blank" rel="noopener">官方文档</a>仅能够看到RDB与AOF两种方案的说明。</p>
+<h3 id="RDB存储"><a href="#RDB存储" class="headerlink" title="RDB存储"></a>RDB存储</h3><p>RDB持久性以指定的时间间隔执行”数据集”的时间点快照;<br><img src="/images/redis-simple-description/redis-RDB.png" alt="RDB-CopyOnWrite"></p>
+<ol>
+<li>CopyOnWrite思路：Redis服务在dump过程一般还是会收到数据写操作请求，一方面保证在dump操作过程数据不会变化，另一方面保证服务响应客户端操作；</li>
+<li>快照操作过程中不能影响上一次的备份数据：Redis服务会在磁盘上创建一个临时文件进行数据操作，待操作成功后才会用这个临时文件替换掉上一次的备份（只有全部操作完成的快照才可替换原备份）</li>
+</ol>
+<h3 id="AOF存储"><a href="#AOF存储" class="headerlink" title="AOF存储"></a>AOF存储</h3><ol>
+<li>AOF持久性记录服务器接收的每个”写入操作”，将在服务器启动时再次播放，重建原始数据集；</li>
+<li>使用与Redis协议本身相同的格式以仅”追加方式”记录命令（不进行覆盖）；</li>
+<li>当Redis太大时，Redis能够重写日志(一段时间内对统一”key”进行了添加与删除操作，那么重写日志将会去除改”key”的操作记录)；<br>如果您愿意，只要服务器正在运行，您就可以根据需要禁用持久性。</li>
+</ol>
+<h3 id="参考链接-5"><a href="#参考链接-5" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://blog.csdn.net/liupeifeng3514/article/details/79048767" target="_blank" rel="noopener">Redis持久化存储方案</a></p>
+<h2 id="Redis持久化存储配置说明"><a href="#Redis持久化存储配置说明" class="headerlink" title="Redis持久化存储配置说明"></a>Redis持久化存储配置说明</h2><p><a href="https://www.cnblogs.com/w787815/p/6746513.html" target="_blank" rel="noopener">Redis持久化存储（一）</a><br><a href="https://www.cnblogs.com/w787815/p/6749682.html" target="_blank" rel="noopener">Redis持久化存储（二）</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/02/redis-simple-description/" data-id="cjtz6a42v0001zrtxgna6m5z2" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/02/redis-simple-description/" data-id="cjtzd3fx80001oftxm1g93lvr" class="article-share-link">Share</a>
       
       
     </footer>
