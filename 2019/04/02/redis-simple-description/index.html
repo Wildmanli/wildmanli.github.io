@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash),">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-01T17:59:35.277Z">
+<meta property="og:updated_time" content="2019-04-02T02:08:45.907Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis简述">
 <meta name="twitter:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash),">
@@ -71,7 +71,7 @@
         <section id="main"><article id="post-redis-simple-description" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/02/redis-simple-description/" class="article-date">
-  <time datetime="2019-04-01T17:59:35.276Z" itemprop="datePublished">2019-04-02</time>
+  <time datetime="2019-04-02T02:08:45.907Z" itemprop="datePublished">2019-04-02</time>
 </a>
     
   </div>
@@ -122,7 +122,8 @@
 </ol>
 <h4 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a><br><a href="https://redis.io/topics/data-types#lists" target="_blank" rel="noopener">更多lists介绍</a></p>
 <h3 id="Redis-Hash类型"><a href="#Redis-Hash类型" class="headerlink" title="Redis Hash类型"></a>Redis Hash类型</h3><p>redis中hash表存储数据，比较类似数据库中表的一条记录。</p>
-<h4 id="操作命令-2"><a href="#操作命令-2" class="headerlink" title="操作命令"></a>操作命令</h4><figure class="highlight plain"><figcaption><span>[HSET操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; HSET &quot;key&quot; &quot;field&quot; &quot;value&quot;</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
+<h4 id="操作命令-2"><a href="#操作命令-2" class="headerlink" title="操作命令"></a>操作命令</h4><figure class="highlight plain"><figcaption><span>[HSET操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; HSET &quot;key&quot; &quot;field&quot; &quot;value&quot; [&quot;field&quot; &quot;value&quot; ...]</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>[HKEYS操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; HKEYS &quot;key&quot;</span><br><span class="line">&quot;field1&quot;</span><br><span class="line">&quot;field2&quot;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><figcaption><span>[HGET操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; HGET &quot;key&quot; &quot;field&quot;</span><br><span class="line">&quot;value&quot;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><figcaption><span>[HEXISTS操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; HEXISTS &quot;key&quot; &quot;field&quot;</span><br><span class="line">(integer) 0/1   //表示false/ture</span><br></pre></td></tr></table></figure>
 <h4 id="参考链接-2"><a href="#参考链接-2" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a><br><a href="https://redis.io/topics/data-types#hashes" target="_blank" rel="noopener">更多hashes介绍</a></p>
@@ -154,7 +155,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/02/redis-simple-description/" data-id="cjtyntzb000004jtx9sd5i158" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/02/redis-simple-description/" data-id="cjtz59f0a0001u2txs5xv2d7d" class="article-share-link">Share</a>
       
       
     </footer>
