@@ -201,3 +201,26 @@ redis> ZREM "key" "member" ["member" ...]
 [redis 五种数据结构详解](https://www.cnblogs.com/sdgf/p/6244937.html)
 [Redis命令参考](http://redisdoc.com/string/index.html)
 [更多sorted-sets介绍](https://redis.io/topics/data-types#sorted-sets)
+
+## Redis持久存储方案
+Redis服务提供四种持久化存储方案：RDB、AOF、虚拟内存（VM）和　DISKSTORE;    
+[官方文档](https://redis.io/topics/persistence)仅能够看到RDB与AOF两种方案的说明。
+
+### RDB存储
+RDB持久性以指定的时间间隔执行"数据集"的时间点快照;
+![RDB-CopyOnWrite](/images/redis-simple-description/redis-RDB.png)
+1. CopyOnWrite思路：Redis服务在dump过程一般还是会收到数据写操作请求，一方面保证在dump操作过程数据不会变化，另一方面保证服务响应客户端操作；
+2. 快照操作过程中不能影响上一次的备份数据：Redis服务会在磁盘上创建一个临时文件进行数据操作，待操作成功后才会用这个临时文件替换掉上一次的备份（只有全部操作完成的快照才可替换原备份）
+
+### AOF存储
+1. AOF持久性记录服务器接收的每个"写入操作"，将在服务器启动时再次播放，重建原始数据集；
+2. 使用与Redis协议本身相同的格式以仅"追加方式"记录命令（不进行覆盖）；
+3. 当Redis太大时，Redis能够重写日志(一段时间内对统一"key"进行了添加与删除操作，那么重写日志将会去除改"key"的操作记录)；
+如果您愿意，只要服务器正在运行，您就可以根据需要禁用持久性。
+
+### 参考链接
+[Redis持久化存储方案](https://blog.csdn.net/liupeifeng3514/article/details/79048767)
+
+## Redis持久化存储配置说明
+[Redis持久化存储（一）](https://www.cnblogs.com/w787815/p/6746513.html)
+[Redis持久化存储（二）](https://www.cnblogs.com/w787815/p/6749682.html)
