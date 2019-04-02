@@ -72,7 +72,7 @@
     <article id="post-redis-simple-description" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/02/redis-simple-description/" class="article-date">
-  <time datetime="2019-04-02T02:08:45.907Z" itemprop="datePublished">2019-04-02</time>
+  <time datetime="2019-04-02T02:37:27.274Z" itemprop="datePublished">2019-04-02</time>
 </a>
     
   </div>
@@ -91,7 +91,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。<br>Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。<br>它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。</p>
+        <p>REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。<br>Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。<br>它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表(list)，集合(sets) 和 有序集合(sorted sets)等类型。</p>
 <h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>Redis支持五种类型数据结构：string，list，hash，set，zset。</p>
 <h3 id="Redis-String类型"><a href="#Redis-String类型" class="headerlink" title="Redis String类型"></a>Redis String类型</h3><p>string类型的数据存储是最简单的key-value存储</p>
 <h4 id="操作命令"><a href="#操作命令" class="headerlink" title="操作命令"></a>操作命令</h4><figure class="highlight plain"><figcaption><span>[SET操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; SET &quot;key&quot; &quot;value&quot; [EX seconds] [PX milliseconds] [NX|XX]</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
@@ -120,6 +120,15 @@
 <ol>
 <li>当start为0，stop为 1：返回数组包含下标为0到1共2个元素。</li>
 <li>当start为0，stop为-1：返回第0个至倒数第一个,相当于返回所有元素,注意redis中很多时候会用到负数。</li>
+</ol>
+<figure class="highlight plain"><figcaption><span>[LPOP操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; LPOP &quot;key&quot;</span><br><span class="line">&quot;value&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>[RPOP操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; RPOP &quot;key&quot;</span><br><span class="line">&quot;value&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>[LREM操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; LREM &quot;key&quot; &quot;count&quot; &quot;value&quot;</span><br><span class="line">(integer) 3</span><br></pre></td></tr></table></figure>
+<p>根据参数 count 的值，移除列表中与参数 value 相等的元素。<br>count 的值可以是以下几种：</p>
+<ol>
+<li>count &gt; 0 : 从表头开始向表尾搜索，移除与 value 相等的元素，数量为 count；</li>
+<li>count &lt; 0 : 从表尾开始向表头搜索，移除与 value 相等的元素，数量为 count 的绝对值；（所以不存在RREM命令）</li>
+<li>count = 0 : 移除表中所有与 value 相等的值。</li>
 </ol>
 <h4 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a><br><a href="https://redis.io/topics/data-types#lists" target="_blank" rel="noopener">更多lists介绍</a></p>
 <h3 id="Redis-Hash类型"><a href="#Redis-Hash类型" class="headerlink" title="Redis Hash类型"></a>Redis Hash类型</h3><p>redis中hash表存储数据，比较类似数据库中表的一条记录。</p>
@@ -156,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/02/redis-simple-description/" data-id="cjtz59f0a0001u2txs5xv2d7d" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/02/redis-simple-description/" data-id="cjtz6a42v0001zrtxgna6m5z2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -201,7 +210,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/03/30/hello-world/" data-id="cjtz59f050000u2txnme9bec4" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/03/30/hello-world/" data-id="cjtz6a42q0000zrtxsgpv3qhb" class="article-share-link">Share</a>
       
       
     </footer>
