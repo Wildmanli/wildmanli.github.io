@@ -8,16 +8,17 @@
   <title>Redis简述 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表">
+<meta name="keywords" content="data structures,redis,AOF,RDB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis简述">
-<meta property="og:url" content="http://www.wildmanli.top/2019/04/02/redis-simple-description/index.html">
+<meta property="og:url" content="http://www.wildmanli.top/2019/04/03/redis-simple-description/index.html">
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://www.wildmanli.top/images/redis-simple-description/redis-RDB.png">
 <meta property="og:image" content="http://www.wildmanli.top/images/redis-simple-description/AOF-FSYNC-EVERYSEC.png">
 <meta property="og:image" content="http://www.wildmanli.top/images/redis-simple-description/AOF-REWRITE.png">
-<meta property="og:updated_time" content="2019-04-02T09:33:01.921Z">
+<meta property="og:updated_time" content="2019-04-06T06:55:06.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis简述">
 <meta name="twitter:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表">
@@ -74,8 +75,8 @@
       <div class="outer">
         <section id="main"><article id="post-redis-simple-description" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/02/redis-simple-description/" class="article-date">
-  <time datetime="2019-04-02T09:33:01.920Z" itemprop="datePublished">2019-04-02</time>
+    <a href="/2019/04/03/redis-simple-description/" class="article-date">
+  <time datetime="2019-04-02T16:00:00.000Z" itemprop="datePublished">2019-04-03</time>
 </a>
     
   </div>
@@ -177,7 +178,7 @@
 <li><a href="https://redisbook.readthedocs.io/en/latest/internal/aof.html" target="_blank" rel="noopener">AOF 功能的运作机制</a>    </li>
 </ol>
 <p>疑问：如果Redis响应客户端方式为多线程执行，AOF存储的指令集的顺序保证，以及恢复数据时执行是否会出现问题？<br>————Redis是单进程单线程处理客户端响应。</p>
-<h4 id="AOP文件的写入与存储"><a href="#AOP文件的写入与存储" class="headerlink" title="AOP文件的写入与存储"></a>AOP文件的写入与存储</h4><p>每当服务器常规任务函数被执行或者事件处理器被执行时，flushAppendOnlyFile 函数都会被调用，这个函数执行以下两个工作：<br>WRITE：根据条件（参数设置以及默认触发条件），将缓存写入到 AOF 文件（采用追加的方式，原AOF文件会加载到内存）<br>SAVE：根据条件（参数设置以及默认触发条件），将 AOF 文件保存到磁盘中（完成持久化操作）</p>
+<h4 id="AOF文件的写入与存储"><a href="#AOF文件的写入与存储" class="headerlink" title="AOF文件的写入与存储"></a>AOF文件的写入与存储</h4><p>每当服务器常规任务函数被执行或者事件处理器被执行时，flushAppendOnlyFile 函数都会被调用，这个函数执行以下两个工作：<br>WRITE：根据条件（参数设置以及默认触发条件），将缓存写入到 AOF 文件（采用追加的方式，原AOF文件会加载到内存）<br>SAVE：根据条件（参数设置以及默认触发条件），将 AOF 文件保存到磁盘中（完成持久化操作）</p>
 <p>AOF 所使用的保存模式决定步骤 WRITE 和 SAVE 的调用条件。</p>
 <h5 id="AOF-FSYNC-NO"><a href="#AOF-FSYNC-NO" class="headerlink" title="AOF_FSYNC_NO"></a>AOF_FSYNC_NO</h5><p>不保存，但每次执行flushAppendOnlyFile函数 都会执行 WRITE，直到满足如下条件之一才会执行SAVE。</p>
 <ol>
@@ -219,14 +220,25 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/02/redis-simple-description/" data-id="cjtzl4fom0001m7tx6zk8xmcs" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/03/redis-simple-description/" data-id="cju5p0wnp0002cftxzkkcdea2" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOF/">AOF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RDB/">RDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structures/">data structures</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/04/06/mysql-database-encode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          记录：mysql 中文乱码
+        
+      </div>
+    </a>
   
   
     <a href="/2019/03/30/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
@@ -247,9 +259,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AOF/">AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDB/">RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structures/">data structures</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encode/">encode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AOF/" style="font-size: 10px;">AOF</a> <a href="/tags/RDB/" style="font-size: 10px;">RDB</a> <a href="/tags/data-structures/" style="font-size: 10px;">data structures</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -268,7 +294,11 @@
       <ul>
         
           <li>
-            <a href="/2019/04/02/redis-simple-description/">Redis简述</a>
+            <a href="/2019/04/06/mysql-database-encode/">记录：mysql 中文乱码</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/03/redis-simple-description/">Redis简述</a>
           </li>
         
           <li>
