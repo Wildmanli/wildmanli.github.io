@@ -5,24 +5,20 @@
   
 
   
-  <title>Redis简述 | Blog</title>
+  <title>Redis五种常用数据结构及简单操作指令 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表">
-<meta name="keywords" content="data structures,redis,AOF,RDB">
+<meta name="keywords" content="data structures">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis简述">
-<meta property="og:url" content="http://www.wildmanli.top/2019/04/03/redis-simple-description/index.html">
+<meta property="og:title" content="Redis五种常用数据结构及简单操作指令">
+<meta property="og:url" content="http://www.wildmanli.top/2019/04/03/redis-data-structure-and-command/index.html">
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.wildmanli.top/images/redis-simple-description/redis-RDB.png">
-<meta property="og:image" content="http://www.wildmanli.top/images/redis-simple-description/AOF-FSYNC-EVERYSEC.png">
-<meta property="og:image" content="http://www.wildmanli.top/images/redis-simple-description/AOF-REWRITE.png">
-<meta property="og:updated_time" content="2019-04-06T06:55:06.656Z">
+<meta property="og:updated_time" content="2019-05-21T07:31:23.861Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis简述">
+<meta name="twitter:title" content="Redis五种常用数据结构及简单操作指令">
 <meta name="twitter:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String)，哈希(Hash)，列表">
-<meta name="twitter:image" content="http://www.wildmanli.top/images/redis-simple-description/redis-RDB.png">
   
     <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -73,9 +69,9 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-redis-simple-description" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-redis-data-structure-and-command" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/03/redis-simple-description/" class="article-date">
+    <a href="/2019/04/03/redis-data-structure-and-command/" class="article-date">
   <time datetime="2019-04-02T16:00:00.000Z" itemprop="datePublished">2019-04-03</time>
 </a>
     
@@ -87,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Redis简述
+      Redis五种常用数据结构及简单操作指令
     </h1>
   
 
@@ -165,65 +161,14 @@
 </ol>
 <figure class="highlight plain"><figcaption><span>[ZREM操作]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; ZREM &quot;key&quot; &quot;member&quot; [&quot;member&quot; ...]</span><br><span class="line">(integer) 2</span><br></pre></td></tr></table></figure>
 <h4 id="参考链接-4"><a href="#参考链接-4" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.cnblogs.com/sdgf/p/6244937.html" target="_blank" rel="noopener">redis 五种数据结构详解</a><br><a href="http://redisdoc.com/string/index.html" target="_blank" rel="noopener">Redis命令参考</a><br><a href="https://redis.io/topics/data-types#sorted-sets" target="_blank" rel="noopener">更多sorted-sets介绍</a></p>
-<h2 id="Redis持久存储方案"><a href="#Redis持久存储方案" class="headerlink" title="Redis持久存储方案"></a>Redis持久存储方案</h2><p>Redis服务提供四种持久化存储方案：RDB、AOF、虚拟内存（VM）和　DISKSTORE;<br><a href="https://redis.io/topics/persistence" target="_blank" rel="noopener">官方文档</a>仅能够看到RDB与AOF两种方案的说明;<br>如果您愿意，只要服务器正在运行，您就可以根据需要禁用持久性。</p>
-<h3 id="RDB存储"><a href="#RDB存储" class="headerlink" title="RDB存储"></a>RDB存储</h3><p>RDB持久性以指定的时间间隔执行”数据集”的时间点快照;<br><img src="/images/redis-simple-description/redis-RDB.png" alt="RDB-CopyOnWrite"></p>
-<ol>
-<li>CopyOnWrite思路：Redis服务在dump过程一般还是会收到数据写操作请求，一方面保证在dump操作过程数据不会变化，另一方面保证服务响应客户端操作；</li>
-<li>快照操作过程中不能影响上一次的备份数据：Redis服务会在磁盘上创建一个临时文件进行数据操作，待操作成功后才会用这个临时文件替换掉上一次的备份（只有全部操作完成的快照才可替换原备份）</li>
-</ol>
-<h3 id="AOF存储"><a href="#AOF存储" class="headerlink" title="AOF存储"></a>AOF存储</h3><ol>
-<li>AOF持久性记录服务器接收的每个”写入操作”，将在服务器启动时再次播放，重建原始数据集；</li>
-<li>使用与Redis协议本身相同的格式以仅”追加方式”记录命令（不进行覆盖）；</li>
-<li>当Redis太大时，Redis能够重写AOF文件(一段时间内对统一”key”进行了添加与删除操作，那么重写AOF文件将会去除改”key”的操作记录)；</li>
-<li><a href="https://redisbook.readthedocs.io/en/latest/internal/aof.html" target="_blank" rel="noopener">AOF 功能的运作机制</a>    </li>
-</ol>
-<p>疑问：如果Redis响应客户端方式为多线程执行，AOF存储的指令集的顺序保证，以及恢复数据时执行是否会出现问题？<br>————Redis是单进程单线程处理客户端响应。</p>
-<h4 id="AOF文件的写入与存储"><a href="#AOF文件的写入与存储" class="headerlink" title="AOF文件的写入与存储"></a>AOF文件的写入与存储</h4><p>每当服务器常规任务函数被执行或者事件处理器被执行时，flushAppendOnlyFile 函数都会被调用，这个函数执行以下两个工作：<br>WRITE：根据条件（参数设置以及默认触发条件），将缓存写入到 AOF 文件（采用追加的方式，原AOF文件会加载到内存）<br>SAVE：根据条件（参数设置以及默认触发条件），将 AOF 文件保存到磁盘中（完成持久化操作）</p>
-<p>AOF 所使用的保存模式决定步骤 WRITE 和 SAVE 的调用条件。</p>
-<h5 id="AOF-FSYNC-NO"><a href="#AOF-FSYNC-NO" class="headerlink" title="AOF_FSYNC_NO"></a>AOF_FSYNC_NO</h5><p>不保存，但每次执行flushAppendOnlyFile函数 都会执行 WRITE，直到满足如下条件之一才会执行SAVE。</p>
-<ol>
-<li>Redis 被关闭（正常关闭，非故障）</li>
-<li>AOF 功能被关闭（只要服务器正在运行，您就可以根据需要禁用持久性）</li>
-<li>系统的写缓存被刷新（可能是缓存已经被写满，或者定期保存操作被执行）</li>
-</ol>
-<h5 id="AOF-FSYNC-EVERYSEC"><a href="#AOF-FSYNC-EVERYSEC" class="headerlink" title="AOF_FSYNC_EVERYSEC"></a>AOF_FSYNC_EVERYSEC</h5><p>SAVE 原则上每隔一秒钟就会执行一次,因为 SAVE 操作是由后台子线程调用的，不会引起服务器主进程阻塞。<br><img src="/images/redis-simple-description/AOF-FSYNC-EVERYSEC.png" alt="AOF_FSYNC_EVERYSEC"><br>子线程正在执行 SAVE ，并且：</p>
-<ol>
-<li>这个 SAVE 的执行时间未超过 2 秒，那么程序直接返回，并不执行 WRITE 或新的 SAVE 。</li>
-<li>这个 SAVE 已经执行超过 2 秒，那么程序执行 WRITE ，但不执行新的 SAVE（因为这时 WRITE 的写入必须等待子线程先完成（旧的）SAVE，因此这里 WRITE 会比平时阻塞更长时间）</li>
-</ol>
-<p>子线程没有在执行 SAVE ，并且：</p>
-<ol start="3">
-<li>上次成功执行 SAVE 距今不超过 1 秒，那么程序执行 WRITE ，但不执行 SAVE</li>
-<li>上次成功执行 SAVE 距今已经超过 1 秒，那么程序执行 WRITE 和 SAVE</li>
-</ol>
-<h5 id="AOF-FSYNC-ALWAYS-：每执行一个命令保存一次。"><a href="#AOF-FSYNC-ALWAYS-：每执行一个命令保存一次。" class="headerlink" title="AOF_FSYNC_ALWAYS ：每执行一个命令保存一次。"></a>AOF_FSYNC_ALWAYS ：每执行一个命令保存一次。</h5><p>在这种模式下，每次执行完一个命令之后， WRITE 和 SAVE 都会被执行。<br>SAVE 是由 Redis 主进程执行的，SAVE 执行期间，主进程会被阻塞，不能接受命令请求。</p>
-<h4 id="AOF文件重写"><a href="#AOF文件重写" class="headerlink" title="AOF文件重写"></a>AOF文件重写</h4><p>问题：AOF文件通过同步Redis服务器所执行的指令，实现了数据库状态的记录。随着运行时间越长，AOF文件会变得越来越大。<br>方案：AOF文件重写——创建一个新的AOF文件来代替原有的AOF文件,新AOF文件和原有AOF文件保存的数据库状态完全一样,但新 AOF 文件的体积小于等于原有AOF文件的体积。<br>注意：AOF重写并不需要对原有的AOF文件进行任何写入和读取，而是针对的是数据库中键的当前值。</p>
-<h5 id="子进程执行"><a href="#子进程执行" class="headerlink" title="子进程执行"></a>子进程执行</h5><p>使用辅佐性的维护手段，将AOF文件重写程序放到”子进程”里执行，存在好处：</p>
-<ol>
-<li>“子进程”进行AOF重写期间，”主进程”可以继续处理命令请求（如果仍然在主进程执行，对原AOF文件的重写操作将会在数据库添加”锁”，变相导致进程阻塞）</li>
-<li>“子进程”复制了主进程的数据副本，但数据空间独立（使用子进程而不是线程，可以在避免锁的情况下，保证数据的安全性）</li>
-</ol>
-<h5 id="数据不一致处理"><a href="#数据不一致处理" class="headerlink" title="数据不一致处理"></a>数据不一致处理</h5><p>子进程在进行AOF重写期间，主进程仍继续处理命令，而新的指令对现有的数据进行修改，这会让当前数据库数据和重写后的AOF文件中的数据不一致。<br><img src="/images/redis-simple-description/AOF-REWRITE.png" alt="AOF-REWRITE"><br>当子进程在执行AOF重写时，”主进程”需要执行以下三个工作：</p>
-<ol>
-<li>处理命令请求（正常响应请求）</li>
-<li>将写命令追加到现有的”AOF文件”中（在AOF重写失败后，备份恢复仍然可用）</li>
-<li>将写命令追加到”AOF重写缓存”中（在进行AOF重写过程中，新的执行指令都记录到AOF重写缓存中，用以追加到重写后的AOF文件）</li>
-</ol>
-<p>当子进程完成AOF重写之后，它会向父进程发送一个完成信号，父进程在接到完成信号之后，会调用一个信号处理函数，并完成以下工作：</p>
-<ol>
-<li>将AOF重写缓存中的内容全部写入到新AOF文件中（执行完毕之后，现有AOF文件、新AOF文件和数据库三者的状态就完全一致了）</li>
-<li>对新的AOF文件进行改名，覆盖原有的AOF文件（执行完毕之后，程序就完成了新旧两个AOF文件的交替）</li>
-</ol>
-<h3 id="参考链接-5"><a href="#参考链接-5" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://blog.csdn.net/liupeifeng3514/article/details/79048767" target="_blank" rel="noopener">Redis持久化存储方案</a><br><a href="https://blog.csdn.net/xlgen157387/article/details/79470556" target="_blank" rel="noopener">为什么说Redis是单线程的以及Redis为什么这么快！</a><br><a href="https://blog.csdn.net/u013851082/article/details/76902046" target="_blank" rel="noopener">fork出的子进程和父进程</a></p>
-<h2 id="Redis持久化存储配置说明"><a href="#Redis持久化存储配置说明" class="headerlink" title="Redis持久化存储配置说明"></a>Redis持久化存储配置说明</h2><p><a href="https://www.cnblogs.com/w787815/p/6746513.html" target="_blank" rel="noopener">Redis持久化存储（一）</a><br><a href="https://www.cnblogs.com/w787815/p/6749682.html" target="_blank" rel="noopener">Redis持久化存储（二）</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/03/redis-simple-description/" data-id="cjvxgt1zj0005hztxef4462gk" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/03/redis-data-structure-and-command/" data-id="cjvxheubi0003mdtxfmnvfcrt" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOF/">AOF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RDB/">RDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structures/">data structures</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structures/">data structures</a></li></ul>
 
     </footer>
   </div>
@@ -272,7 +217,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AOF/" style="font-size: 10px;">AOF</a> <a href="/tags/RDB/" style="font-size: 10px;">RDB</a> <a href="/tags/data-structures/" style="font-size: 10px;">data structures</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
+      <a href="/tags/AOF/" style="font-size: 10px;">AOF</a> <a href="/tags/RDB/" style="font-size: 10px;">RDB</a> <a href="/tags/data-structures/" style="font-size: 10px;">data structures</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a>
     </div>
   </div>
 
@@ -281,7 +226,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li></ul>
     </div>
   </div>
 
@@ -294,6 +239,14 @@
       <ul>
         
           <li>
+            <a href="/2019/05/21/redis-persistent-storage-configuration/">Redis持久化存储配置简述</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/21/redis-persistent-storage-analysis/">Redis持久化方案简述</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/09/QA-java-interview/">Java面试题收集</a>
           </li>
         
@@ -302,11 +255,7 @@
           </li>
         
           <li>
-            <a href="/2019/04/03/redis-simple-description/">Redis简述</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/30/hello-world/">Hello World</a>
+            <a href="/2019/04/03/redis-data-structure-and-command/">Redis五种常用数据结构及简单操作指令</a>
           </li>
         
       </ul>
