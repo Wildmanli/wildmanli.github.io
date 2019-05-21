@@ -5,18 +5,20 @@
   
 
   
-  <title>Tag: docker | Blog</title>
+  <title>Java面试题收集 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="point">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog">
-<meta property="og:url" content="http://www.wildmanli.top/tags/docker/index.html">
+  <meta name="description" content="Question 为什么要使用Spring Boot？分析问题关键点在于回答 Spring Boot的核心特点，相较于Spring。 AnswerSpring Boot 的开启注解是 @SpringBootApplication,其由如下三个注解组成：  @Configuration @ComponentScan @EnableAutoConfiguration前面两个都是Spring自带，与Sp">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java面试题收集">
+<meta property="og:url" content="http://www.wildmanli.top/2019/04/09/QA-java-interview/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="point">
+<meta property="og:description" content="Question 为什么要使用Spring Boot？分析问题关键点在于回答 Spring Boot的核心特点，相较于Spring。 AnswerSpring Boot 的开启注解是 @SpringBootApplication,其由如下三个注解组成：  @Configuration @ComponentScan @EnableAutoConfiguration前面两个都是Spring自带，与Sp">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-09T13:58:03.110Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
-<meta name="twitter:description" content="point">
+<meta name="twitter:title" content="Java面试题收集">
+<meta name="twitter:description" content="Question 为什么要使用Spring Boot？分析问题关键点在于回答 Spring Boot的核心特点，相较于Spring。 AnswerSpring Boot 的开启注解是 @SpringBootApplication,其由如下三个注解组成：  @Configuration @ComponentScan @EnableAutoConfiguration前面两个都是Spring自带，与Sp">
   
     <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -67,40 +69,60 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/06/mysql-database-encode/" class="archive-article-date">
-  <time datetime="2019-04-05T16:00:00.000Z" itemprop="datePublished">Apr 6</time>
+        <section id="main"><article id="post-QA-java-interview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/09/QA-java-interview/" class="article-date">
+  <time datetime="2019-04-09T13:42:50.000Z" itemprop="datePublished">2019-04-09</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/06/mysql-database-encode/">记录：mysql 中文乱码</a>
+    <h1 class="article-title" itemprop="name">
+      Java面试题收集
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Question-为什么要使用Spring-Boot？"><a href="#Question-为什么要使用Spring-Boot？" class="headerlink" title="Question 为什么要使用Spring Boot？"></a>Question 为什么要使用Spring Boot？</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>问题关键点在于回答 Spring Boot的核心特点，相较于Spring。</p>
+<h3 id="Answer"><a href="#Answer" class="headerlink" title="Answer"></a>Answer</h3><p>Spring Boot 的开启注解是 @SpringBootApplication,其由如下三个注解组成：</p>
+<ul>
+<li>@Configuration</li>
+<li>@ComponentScan</li>
+<li>@EnableAutoConfiguration<br>前面两个都是Spring自带，与Spring Boot无关，核心是第三个@EnableAutoConfiguration注解，它能根据路径下的jar包和配置动态加载配置和注入bean。<br>具体一点就是可以和maven搭配使用，在pom.xml中引入依赖jar包，而在配置文件中设置依赖jar包的启动参数，Spring Boot会自动的将参数配置到引用jar包配置的bean中。<br>而在Spring中需要手动的将参数要么配置在XML中，要么配置在java bean中。</li>
+</ul>
 
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.wildmanli.top/2019/04/09/QA-java-interview/" data-id="cjvx8dja50000untxm92t7w24" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/06/mysql-database-encode/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">记录：mysql 中文乱码</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         

@@ -69,6 +69,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-QA-java-interview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/09/QA-java-interview/" class="article-date">
+  <time datetime="2019-04-09T13:42:50.000Z" itemprop="datePublished">2019-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/09/QA-java-interview/">Java面试题收集</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Question-为什么要使用Spring-Boot？"><a href="#Question-为什么要使用Spring-Boot？" class="headerlink" title="Question 为什么要使用Spring Boot？"></a>Question 为什么要使用Spring Boot？</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>问题关键点在于回答 Spring Boot的核心特点，相较于Spring。</p>
+<h3 id="Answer"><a href="#Answer" class="headerlink" title="Answer"></a>Answer</h3><p>Spring Boot 的开启注解是 @SpringBootApplication,其由如下三个注解组成：</p>
+<ul>
+<li>@Configuration</li>
+<li>@ComponentScan</li>
+<li>@EnableAutoConfiguration<br>前面两个都是Spring自带，与Spring Boot无关，核心是第三个@EnableAutoConfiguration注解，它能根据路径下的jar包和配置动态加载配置和注入bean。<br>具体一点就是可以和maven搭配使用，在pom.xml中引入依赖jar包，而在配置文件中设置依赖jar包的启动参数，Spring Boot会自动的将参数配置到引用jar包配置的bean中。<br>而在Spring中需要手动的将参数要么配置在XML中，要么配置在java bean中。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.wildmanli.top/2019/04/09/QA-java-interview/" data-id="cjvx8dja50000untxm92t7w24" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-mysql-database-encode" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/06/mysql-database-encode/" class="article-date">
@@ -116,11 +161,18 @@
 <li>在[mysql]下方添加 default-character-set=utf8mb4</li>
 <li>在[mysqld] 下方添加 character_set_server=utf8mb4</li>
 </ol>
-
+<h2 id="docker-mysql-乱码事件"><a href="#docker-mysql-乱码事件" class="headerlink" title="docker mysql 乱码事件"></a>docker mysql 乱码事件</h2><p>就在前面几天，测试服务器重装环境，同时也重新使用docker启动了mysql服务。<br>启动web应用程序后，发现页面并不能正常的加载数据内容，经过系列调试，发现了中文乱码问题。</p>
+<h3 id="中文乱码分析"><a href="#中文乱码分析" class="headerlink" title="中文乱码分析"></a>中文乱码分析</h3><p>web应用服务中文乱码问题出现点可能发生在如下两个点：</p>
+<ol>
+<li>Web页面到后端服务；</li>
+<li>后端服务到数据库服务。<br>导致的根本原因是交互过程编码解析不一致。</li>
+</ol>
+<h4 id="Web页面到后端服务调试"><a href="#Web页面到后端服务调试" class="headerlink" title="Web页面到后端服务调试"></a>Web页面到后端服务调试</h4><p>简单粗暴，直接开发环境开启debug模式查看访问情况：<br>关注后端服务请求数据是否出现乱码。<br>由于目前未遇到相关情况，保留意见。</p>
+<h4 id="后端服务到数据库服务"><a href="#后端服务到数据库服务" class="headerlink" title="后端服务到数据库服务"></a>后端服务到数据库服务</h4>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/06/mysql-database-encode/" data-id="cju5p0wno0001cftxfld5kneq" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/06/mysql-database-encode/" data-id="cjvx8djao0004untxwmz7vc2e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/database/">database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/encode/">encode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -279,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/03/redis-simple-description/" data-id="cju5p0wnp0002cftxzkkcdea2" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/03/redis-simple-description/" data-id="cjvx8djap0005untxhjugfa96" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOF/">AOF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RDB/">RDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structures/">data structures</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
@@ -326,7 +378,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/03/30/hello-world/" data-id="cju5p0wn70000cftx0h4c7q33" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/03/30/hello-world/" data-id="cjvx8djaa0001untxa060yfqv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -349,7 +401,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AOF/">AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDB/">RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structures/">data structures</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encode/">encode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AOF/">AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDB/">RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structures/">data structures</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encode/">encode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li></ul>
     </div>
   </div>
 
@@ -359,7 +411,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AOF/" style="font-size: 10px;">AOF</a> <a href="/tags/RDB/" style="font-size: 10px;">RDB</a> <a href="/tags/data-structures/" style="font-size: 10px;">data structures</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
+      <a href="/tags/AOF/" style="font-size: 10px;">AOF</a> <a href="/tags/RDB/" style="font-size: 10px;">RDB</a> <a href="/tags/data-structures/" style="font-size: 10px;">data structures</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
     </div>
   </div>
 
@@ -379,6 +431,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/09/QA-java-interview/">Java面试题收集</a>
+          </li>
         
           <li>
             <a href="/2019/04/06/mysql-database-encode/">记录：mysql 中文乱码</a>

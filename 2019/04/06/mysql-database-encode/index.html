@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://www.wildmanli.top/images/mysql-database-encode/mac-mysql-start1.png">
 <meta property="og:image" content="http://www.wildmanli.top/images/mysql-database-encode/mac-mysql-start2.png">
 <meta property="og:image" content="http://www.wildmanli.top/images/mysql-database-encode/mysql-encode.png">
-<meta property="og:updated_time" content="2019-04-06T16:08:55.763Z">
+<meta property="og:updated_time" content="2019-04-07T16:37:53.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录：mysql 中文乱码">
 <meta name="twitter:description" content="mysql数据库服务中文乱码问题已经遇见并处理过两次。第一次是新换用mac，配置开发环境时本地数据库服务中文乱码；第二次是前几天测试服务器环境重装后，docker运行的mysql服务中文乱码。虽然两次在问题原因上一致，但在处理细节上还是存在明显不同。打算记录在案，为可能存在的第三次加深印象。 mac mysql 乱码事件在讲述乱码事件前，补充部分关于mac中安装mysql建议 下载dmg安装包访问">
@@ -122,11 +122,18 @@
 <li>在[mysql]下方添加 default-character-set=utf8mb4</li>
 <li>在[mysqld] 下方添加 character_set_server=utf8mb4</li>
 </ol>
-
+<h2 id="docker-mysql-乱码事件"><a href="#docker-mysql-乱码事件" class="headerlink" title="docker mysql 乱码事件"></a>docker mysql 乱码事件</h2><p>就在前面几天，测试服务器重装环境，同时也重新使用docker启动了mysql服务。<br>启动web应用程序后，发现页面并不能正常的加载数据内容，经过系列调试，发现了中文乱码问题。</p>
+<h3 id="中文乱码分析"><a href="#中文乱码分析" class="headerlink" title="中文乱码分析"></a>中文乱码分析</h3><p>web应用服务中文乱码问题出现点可能发生在如下两个点：</p>
+<ol>
+<li>Web页面到后端服务；</li>
+<li>后端服务到数据库服务。<br>导致的根本原因是交互过程编码解析不一致。</li>
+</ol>
+<h4 id="Web页面到后端服务调试"><a href="#Web页面到后端服务调试" class="headerlink" title="Web页面到后端服务调试"></a>Web页面到后端服务调试</h4><p>简单粗暴，直接开发环境开启debug模式查看访问情况：<br>关注后端服务请求数据是否出现乱码。<br>由于目前未遇到相关情况，保留意见。</p>
+<h4 id="后端服务到数据库服务"><a href="#后端服务到数据库服务" class="headerlink" title="后端服务到数据库服务"></a>后端服务到数据库服务</h4>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.wildmanli.top/2019/04/06/mysql-database-encode/" data-id="cju5p0wno0001cftxfld5kneq" class="article-share-link">Share</a>
+      <a data-url="http://www.wildmanli.top/2019/04/06/mysql-database-encode/" data-id="cjvx8djao0004untxwmz7vc2e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/database/">database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/encode/">encode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -136,6 +143,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/04/09/QA-java-interview/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Java面试题收集
+        
+      </div>
+    </a>
   
   
     <a href="/2019/04/03/redis-simple-description/" id="article-nav-older" class="article-nav-link-wrap">
@@ -159,7 +175,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AOF/">AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDB/">RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structures/">data structures</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encode/">encode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AOF/">AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDB/">RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structures/">data structures</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encode/">encode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li></ul>
     </div>
   </div>
 
@@ -169,7 +185,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AOF/" style="font-size: 10px;">AOF</a> <a href="/tags/RDB/" style="font-size: 10px;">RDB</a> <a href="/tags/data-structures/" style="font-size: 10px;">data structures</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
+      <a href="/tags/AOF/" style="font-size: 10px;">AOF</a> <a href="/tags/RDB/" style="font-size: 10px;">RDB</a> <a href="/tags/data-structures/" style="font-size: 10px;">data structures</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a>
     </div>
   </div>
 
@@ -189,6 +205,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/09/QA-java-interview/">Java面试题收集</a>
+          </li>
         
           <li>
             <a href="/2019/04/06/mysql-database-encode/">记录：mysql 中文乱码</a>
