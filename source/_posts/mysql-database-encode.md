@@ -68,7 +68,9 @@ mysql> set character_set_server = uft8;
 OK
 {% endcodeblock %}
 并再次使用show variables like '%char%'查看时，发现编码已经变更。但这只是在当前会话中生效，当重启MYSQL服务后变更将失效，为了保证后续也保持修改，也只能通过修改配置文件my.cnf。
-遗憾的是mac中安装的MYSQL服务并没有my.cnf配置文件（以及相关的配置文件），幸亏仍然支持，简单粗暴，直接在/etc文件夹中创建一个my.cnf，并修改配置。
+遗憾的是mac中安装的MYSQL服务并没有my.cnf配置文件（以及相关的配置文件），幸亏仍然支持，简单粗暴，直接在/etc文件夹中创建一个my.cnf，并修改配置。    
+⚠️the cnf search path is: /etc/my.cnf /etc/mysql/my.cnf /usr/local/mysql/etc/my.cnf ~/.my.cnf    
+将my.cnf文件放入这些路径下都可有效。
 {% codeblock [创建my.cnf配置文件] %}
 $ cd /etc
 $ mkdir my.cnf
@@ -301,3 +303,8 @@ innodb_thread_concurrency=10
 1. 在[mysql]下方添加 default-character-set=utf8mb4
 2. 在[mysqld] 下方添加 character_set_server=utf8mb4
 
+### 特别提示
+unix、mac、windows 系统中mysql的大小写区分规则默认配置不同[详细参考](https://dev.mysql.com/doc/refman/8.0/en/identifier-case-sensitivity.html)
+1. unix 系统下：库名、表名、表别名、变量名严格区分大小写；列名、列别名忽略大小写   lower_case_table_names=1
+2. windows 系统下：都不区分大小写  lower_case_table_names=0
+3. mac OS系统下：都不区分大小写    lower_case_table_names=2
