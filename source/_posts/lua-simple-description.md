@@ -1,7 +1,7 @@
 ---
-title: Redis Lua脚本使用简述
+title: Lua 语言简述
 date: 2019-05-23 10:28:52
-tags: [redis,lua,script]
+tags: [lua]
 ---
 ## Lua 介绍
 Lua 是一种轻量小巧的脚本语言，用标准C语言编写并以源代码形式开放。
@@ -160,3 +160,83 @@ then
    end
 end
 {% endcodeblock %}
+
+## 基本函数库
+常用函数：type,print,pcall,xpcall
+### type(v)
+功能：返回参数的类型名："nil","number","string","boolean","table","function","thread","userdata"
+
+{% codeblock [函数 type 示例] %}
+> type(hah)                 -- hah变量未定义，返回"nil"类型
+nil
+> a=1
+> type(a)                   -- a变量赋值为数字1，返回"number"类型
+number
+> a="str"
+> type(a)                   -- a变量赋值为字符串str，返回"string"类型
+string
+> a=false
+> type(a)                   -- a变量赋值为false，返回"boolean"类型
+boolean
+> a={}
+> type(a)                   -- a变量赋值为表，返回"table"类型
+table
+> 
+{% endcodeblock %}
+
+### print(...)
+功能：简单的以tostring方式格式化输出参数内容
+{% codeblock [函数 print 示例] %}
+> a="str"
+> print(a)
+str
+> b="bstr"
+> print(a,b)
+str	bstr
+> 
+{% endcodeblock %}
+
+### pcall(f,arg1,...)
+功能：在保护模式下调用函数（即发生的错误将不会发射给调用者）
+当调用函数成功，第一个返回值为true，二、三或更多为函数正常返回值
+当调用函数失败，第一个返回值为false，第二个为错误msg
+{% codeblock [函数 pcall 示例] %}
+> function method1(arg1,arg2) do
+>> local res = arg1 + arg2
+>> return res
+>> end
+>> end
+> pcall(method1,1,2)
+true	3
+> pcall(method1)
+false	stdin:2: attempt to perform arithmetic on a nil value (local 'arg1')
+> a,b=pcall(method1)
+> print(a)
+false
+> print(b)
+stdin:2: attempt to perform arithmetic on a nil value (local 'arg1')
+> 
+{% endcodeblock %}
+
+### xpcall(f,err)
+功能：与pcall类似（但似乎不能传参数？），但可指定一个新的错误处理函数句柄
+当调用函数成功，同pcall
+当调用函数失败，将返回false以及err返回的结果
+{% codeblock [函数 pcall 示例] %}
+> function method1(arg1,arg2) do
+>> local res = arg1 + arg2
+>> return res
+>> end
+>> end
+> function myerr() do
+>> return "there is err"
+>> end
+>> end
+> xpcall(method1,myerr)
+false	there is err
+{% endcodeblock %}
+
+更多函数调用请查看 [基本函数库](https://www.kancloud.cn/digest/luanote/119926)。
+## 推荐链接
+[菜鸟教程](https://www.runoob.com/lua/lua-decision-making.html)——快速了解基本概念与设计
+[Lua学习笔记](https://www.kancloud.cn/digest/luanote/119923)——详细了解lua语言特点以及库
