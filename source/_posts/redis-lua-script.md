@@ -10,7 +10,7 @@ tags: [redis,lua,script]
 本篇包含如下 lua 脚本内容：
 - Redis加载（初始化lua运行环境）
 - Lua与Redis数据类型的转换
-- 脚本命令执行示例
+- 脚本命令执行分析
 - 脚本执行过程分析
 
 ## Redis Lua运行环境
@@ -96,6 +96,17 @@ Redis 要求所有传入服务器的 Lua 脚本无副作用，就需要处理 Lu
 127.0.0.1:6379> 
 {% endcodeblock %}
 
+### 创建错误报告辅助函数
+服务器为 Lua 环境创建了一个 _redis_err_handler 的错误处理函数,
+当脚本运行出现错误时，_redis_err_handler 就会打印出错误代码来源与发生错误行数。
+{% codeblock %}
+127.0.0.1:6379> eval "local a = redis.call('get', KEYS[1]), return a" 1 haha
+(error) ERR Error compiling script (new function): user_script:1: unexpected symbol near 'return' 
+127.0.0.1:6379> eval "local a = redis.pcall('get', KEYS[1]), return a" 1 haha
+(error) ERR Error compiling script (new function): user_script:1: unexpected symbol near 'return' 
+127.0.0.1:6379>
+{% endcodeblock %}
+
 ### 保护 Lua 全局环境
 因为 Lua 变量定义默认为全局变量，为了避免脚本中创建的变量对 Lua全局环境造成影响，Redis 服务器禁用了脚本中全局变量的创建。
 1. 当脚本试图创建一个全局变量时，服务将会报告一个错误
@@ -124,3 +135,39 @@ Redis 要求所有传入服务器的 Lua 脚本无副作用，就需要处理 Lu
 (error) ERR Error compiling script (new function): user_script:1: ')' expected near 'KEYS' 
 127.0.0.1:6379> 
 {% endcodeblock %}
+
+## Lua与Redis数据类型的转换
+Redis 与 Lua 各自具有"数据类型"定义，以下转换规则确保了数据转换的一对一关系。
+⚠️这里的 Redis 数据类型实质上是只 Redis 服务对请求的 reply 数据。
+而 Redis 是采用 C/S 架构，客户端请求，服务端响应。其中的数据交互可以参考[通信协议](http://redisdoc.com/topic/protocol.html)了解。
+
+### Redis数据转换为 Lua 数据
+
+| Redis Reply | Lua Type | 补充说明 |
+| :--------: |:--------:|:--------|
+| integer | number | - |
+| bulk | string | - |
+| multi bulk | table | - |
+| status | table | 包含单个 'ok' 键对应值为其 status 的 table 类型 |
+| error | table | 包含单个 'err' 键对应值为其 error 信息的 table 类型 |
+| Nil bulk / Nil multi bulk | boolean | 值为 false 的 boolean 类型 |
+
+### Lua 数据转换 Redis 数据
+
+| Lua Type | Redis Reply | 补充说明 |
+| :--------: |:--------:|:--------|
+| number | integer | Lua 的小数 (number) 会被转换为 Redis 整型 |
+| string | bulk | - |
+| table(array) | multi bulk | 转换过程中会以 Lua array 中的第一个 nil 作为结束标志|
+| table with a single ok field | status | - |
+| table with a single err field | error | - |
+| false(boolean) | Nil bulk | - |
+
+### 补充转换说明
+- Lua 的 boolean 类型 true 将会转换为值为 1 的 Redis integer reply
+- Lua 的 number 类型可表示整数与小数，在转换为 Redis integer reply 时会忽略小数部分，这点需要特别注意。基于此在脚本中想要返回小数应该将其转换为string
+- Lua 中的数组（table）存在一个定义——以第一个 nil 元素为结束标志。这里存在的缺陷是无法拥有一个包含 nil 元素的数组
+
+## 脚本命令执行分析
+
+## 脚本执行过程分析
