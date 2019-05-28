@@ -15,24 +15,25 @@ tags: [redis,lua,script]
 
 ### Redis Lua运行环境
 Lua 具有原生的运行环境，提供了基本函数库，table函数库，OS函数库等。
-为了保障Lua脚本的安全性运行问题并提供对Redis的操作，在初始化Redis服务器的同时Lua环境也一并进行了系列适用于Redis的修改。
+为了保障 Lua 脚本的安全性运行问题并提供对Redis的操作，在初始化Redis服务器的同时Lua环境也一并进行了系列适用于Redis的修改。
 包括添加函数库、更换随机函数、保护全局变量等。
+
 #### 创建 Lua 基本运行环境
-在初始化的第一步，服务器首先会调用Lua的C API 函数 lua_open，创建一个新的Lua 基本运行环境。
+在初始化的第一步，服务器首先会调用Lua的C API 函数 lua_open，创建一个新的 Lua 基本运行环境。
+
 #### 载入函数库
 - 基本库：包含 Lua 的核心函数，如 assert、error、pcall、pairs。
 为了防止用户从外部文件引入不安全代码，将库中的 loadfile 函数剔除；
 - table 库：提供了处理 table 类型的通用函数，如 table.concat、table.remove、table.sort；
-- string 库：提供了处理 字符串 类型的通用函数，如 string.len、string.reverse、string.formate；
+- string 库：提供了处理 字符串 类型的通用函数，如 string.len、string.reverse、string.format；
 - math 库：提供标准 C 语言数学库接口，如 math.abs、math.max、math.min、math.sqrt、math.log；
 - debug 库：提供了对程序进行调试所需函数，如 debug.sethook、debug.geghook；
 - cjson 库：用于处理 utf-8 编码的 JSON 格式，如 cjson.encode 将一个Lua值序列化为 JSON 格式字符串、cjson.decode 将 JSON 格式字符串转换为 Lua 值；
-- struct 库：用于处理 Lua 值和 C 结构（struct）之前进行转换，如 struct.pack 将多个 Lua 值打包成一个类结构（struct-like）字符串、
-struct.unpack 将一个类结构字符串解包出多个 Lua 值；
-- cmsgpack 库：用于处理 MessagePack 格式的数据，如 cmsgpack.pack 将 Lua 值转换为 MessagePack 数据、
-cmsgpack.unpack 将 MessagePack 数据转换为 Lua 值。
+- struct 库：用于处理 Lua 值和 C 结构（struct）之前进行转换，如 struct.pack 将多个 Lua 值打包成一个类结构（struct-like）字符串、struct.unpack 将一个类结构字符串解包出多个 Lua 值；
+- cmsgpack 库：用于处理 MessagePack 格式的数据，如 cmsgpack.pack 将 Lua 值转换为 MessagePack 数据、cmsgpack.unpack 将 MessagePack 数据转换为 Lua 值。    
+
 #### 创建全局表 redis
-全局表 redis 中包含了各种对Redsi进行操作的函数，包括：
+全局表 redis 中包含了各种对Redis进行操作的函数，包括：
 - 用于执行 Redis 命令的 redis.call 和 redis.pcall 函数
 - 用于发送日志的 redis.log 函数，以及相应的日志级别：
     - redis.LOG_DEBUG
@@ -41,12 +42,14 @@ cmsgpack.unpack 将 MessagePack 数据转换为 Lua 值。
     - redis.LOG_WARNING
 - 用于计算 SHA1 校验和的 redis.sha1hex 函数
 - 用于返回错误信息的 redis.error_reply 函数和 redis.status_reply 函数
+
 #### 替换 Lua 原有随机函数
 为了保证相同的脚本可以在不同的机器上产生相同的结果，Redis 要求所有传入服务器的 Lua 脚本，以及 Lua 环境中的所有函数，都必须是无副作用（side effect）的纯函数（pure function）。
 Lua 原有随机函数是基于 OS，其 seed 往往是基于时钟 ，不符合 Redis 对 Lua 环境的无副作用要求。
 Redis 使用自制的函数替换了 math 库中原有的 math.random 函数和 math.randomseed 函数。替换后的函数具有如下特征：
 - 对于相同的 seed 来说， math.random 总产生相同的随机数序列
 - 除非在脚本中使用 math.randomseed 显式地修改 seed ，否则每次运行脚本时，Lua 环境都使用固定的 math.randomseed(0) 语句来初始化 seed
+
 #### 创建排序辅助函数
 Redis 要求所有传入服务器的 Lua 脚本无副作用，就需要处理 Lua 脚本中可能导致数据不一致的情况。
 除了原有随机函数会导致数据不一致外，还存在一些带有不确定性质的命令：
