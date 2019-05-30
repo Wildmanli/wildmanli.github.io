@@ -444,7 +444,7 @@
 <td style="text-align:left">-</td>
 </tr>
 <tr>
-<td style="text-align:center">false(boolean)</td>
+<td style="text-align:center">boolean(false)</td>
 <td style="text-align:center">Nil bulk</td>
 <td style="text-align:left">-</td>
 </tr>
@@ -455,7 +455,46 @@
 <li>Lua 的 number 类型可表示整数与小数，在转换为 Redis integer reply 时会忽略小数部分，这点需要特别注意。基于此在脚本中想要返回小数应该将其转换为string</li>
 <li>Lua 中的数组（table）存在一个定义——以第一个 nil 元素为结束标志。这里存在的缺陷是无法拥有一个包含 nil 元素的数组</li>
 </ul>
-<h2 id="脚本命令执行分析"><a href="#脚本命令执行分析" class="headerlink" title="脚本命令执行分析"></a>脚本命令执行分析</h2><h2 id="脚本执行过程分析"><a href="#脚本执行过程分析" class="headerlink" title="脚本执行过程分析"></a>脚本执行过程分析</h2>
+<h2 id="脚本命令执行分析"><a href="#脚本命令执行分析" class="headerlink" title="脚本命令执行分析"></a>脚本命令执行分析</h2><p>Redis 服务器提供两种执行 Lua 脚本的命令：EVAL 与 EVALSHA 。主要功能是调用从 Redis 2.6.0 版本内置的 Lua 解释器对脚本进行评估分析。<br>以下将分别介绍 EVAL 与 EVALSHA 的使用。</p>
+<h3 id="EVAL"><a href="#EVAL" class="headerlink" title="EVAL"></a>EVAL</h3><figure class="highlight plain"><figcaption><span>[EVAL 基本语法]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; EVAL script numkeys key [key ...] arg [arg ...]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个参数 script 是 Lua 5.1脚本（一个将要在 Redis 上下文运行的程序）</li>
+<li>第二个参数是脚本后面的 Redis 键名参数数量。</li>
+<li>第三个参数开始直至达到键名参数定义数量，都为键名，可以在脚本 script 中使用全局变量 KEYS 获取（KEYS[1],KEYS[2]…的形式）</li>
+<li>剩下的就是非键名参数，可以在脚本 script 中使用全局变量 ARGV 获取（ARGV[1]，ARGV[2]…的形式）</li>
+</ul>
+<p>示例如下：<br><figure class="highlight plain"><figcaption><span>[EVAL 使用示例]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; EVAL &quot;return &#123;KEYS[1],KEYS[2],ARGV[1],ARGV[2]&#125;&quot; 2 key1 key2 value1 value2</span><br><span class="line">1) &quot;key1&quot;</span><br><span class="line">2) &quot;key2&quot;</span><br><span class="line">3) &quot;value1&quot;</span><br><span class="line">4) &quot;value2&quot;</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">(empty list or set)</span><br><span class="line">127.0.0.1:6379&gt; EVAL &quot;return redis.call(&apos;set&apos;, KEYS[1], ARGV[1])&quot; 1 mykey myvalue</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) &quot;mykey&quot;</span><br><span class="line">127.0.0.1:6379&gt; EVAL &quot;return redis.call(&apos;get&apos;, KEYS[1])&quot; 1 mykey</span><br><span class="line">&quot;myvalue&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure></p>
+<h3 id="EVALSHA"><a href="#EVALSHA" class="headerlink" title="EVALSHA"></a>EVALSHA</h3><figure class="highlight plain"><figcaption><span>[EVALSHA 基本语法]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; EVALSHA sha1 numkeys key [key ...] arg [arg ...]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个参数 sha1 为 Lua 脚本的 SHA1 校验和，服务器会执行 ‘f_’ + sha1 名称的 function</li>
+<li>第二个参数是脚本后面的 Redis 键名参数数量。</li>
+<li>第三个参数开始直至达到键名参数定义数量，都为键名</li>
+<li>剩下的就是非键名参数</li>
+</ul>
+<p>示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SCRIPT LOAD &quot;return &#123;KEYS[1], KEYS[2], ARGV[1], ARGV[2]&#125;&quot;</span><br><span class="line">&quot;c0d2d6f81be75d67523d7c8ac69a932fbe1aa4e2&quot;</span><br><span class="line">127.0.0.1:6379&gt; EVALSHA c0d2d6f81be75d67523d7c8ac69a932fbe1aa4e2 2 k1 k2 v1 v2</span><br><span class="line">1) &quot;k1&quot;</span><br><span class="line">2) &quot;k2&quot;</span><br><span class="line">3) &quot;v1&quot;</span><br><span class="line">4) &quot;v2&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure></p>
+<h2 id="脚本执行过程分析"><a href="#脚本执行过程分析" class="headerlink" title="脚本执行过程分析"></a>脚本执行过程分析</h2><p>EVALSHA 命令是基于 EVAL 命令构建，关于脚本执行过程分析主要对 EVAL 命令执行过程进行分析。</p>
+<p>EVAL 命令执行会分为两步：</p>
+<ol>
+<li>为输入脚本定义一个 Lua 函数（function）</li>
+<li>执行这个 Lua 函数</li>
+</ol>
+<h3 id="定义-Lua-函数"><a href="#定义-Lua-函数" class="headerlink" title="定义 Lua 函数"></a>定义 Lua 函数</h3><p>所有被 Redis 执行的 Lua 脚本，在 Lua 环境中都会有一个和该脚本对应的无参数函数（目的是：以函数为单位的形式保存 Lua 脚本）。<br>当调用 EVAL 命令执行脚本时，程序第一步要完成的工作就是为传入的脚本创建一个相应的 Lua 函数（保存在 lua_scripts 字典）。<br>例如脚本 “return {KEY[1],KEY[2],ARGV[1],ARGV[2]}” ，其生成的 SHA1 校验和为 d8f14ae7100459bda992510e1304e4217cb42234。那么就会创建一个如下的对应函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function f_d8f14ae7100459bda992510e1304e4217cb42234()</span><br><span class="line">    return &#123;KEY[1],KEY[2],ARGV[1],ARGV[2]&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure><br>可以看出，函数名以 f_ 为前缀，后根脚本的 SHA1 校验和拼接而成，而函数体则是用户输入的脚本。<br>如果定义的脚本在编译过程中出错（语法错误），程序将直接返回脚本错误，并不再继续执行后续步骤</p>
+<h3 id="执行-Lua-函数"><a href="#执行-Lua-函数" class="headerlink" title="执行 Lua 函数"></a>执行 Lua 函数</h3><p>在定义好 Lua 函数后，程序就可以通过运行这个函数来达到运行输入脚本的目的。</p>
+<p>不过，在此之前，为了确保脚本的正确和安全执行，需要执行一些设置钩子、传入参数之类的操作，整个执行函数的过程如下：</p>
+<ol>
+<li>将 EVAL 命令中输入的 KEYS 参数和 ARGV 参数以全局数组的方式传入到 Lua 环境中。</li>
+<li>设置伪客户端的目标数据库为调用者客户端的目标数据库：fake_client-&gt;db = caller_client-&gt;db，确保脚本中执行的 Redis 命令访问的是正确的数据库。（Redis 是一种C/S架构，对服务器的访问入口限制为客户端）</li>
+<li>为 Lua 环境装载超时钩子，保证在脚本执行出现超时时可以杀死脚本，或者停止 Redis 服务器。</li>
+<li>执行脚本对应的 Lua 函数。</li>
+<li>如果被执行的 Lua 脚本中带有 SELECT 命令，那么在脚本执行完毕之后，伪客户端中的数据库可能已经有所改变，所以需要对调用者客户端的目标数据库进行更新： caller_client-&gt;db = fake_client-&gt;db 。</li>
+<li>执行清理操作：清除钩子、清除指向调用者客户端的指针等。</li>
+<li>将 Lua 函数执行所得的结果转换成 Redis 回应，然后传给调用者客户端。</li>
+<li>对 Lua 环境进行一次 GC —— <a href="https://blog.codingnow.com/2018/10/lua_gc.html" target="_blank" rel="noopener">参考：Lua GC 的工作原理</a>。</li>
+</ol>
+<p>特别提示：Redis 使用串行化的方式来执行 Redis 命令，在任何特定时间段，最多只会有一个脚本在 Lua 环境里运行。因此，整个 Redis 服务器只需要创建一个 Lua 环境，并且很多对脚本的控制直接转移到了对 Lua 环境的设置。<br>（每次执行脚本，是否都要初始化 Lua 环境，如果不是，那么是怎么做到环境不被污染的相关资料未找到）</p>
+<p><img src="/images/redis-simple-description/Lua-script-process.png" alt="Lua script 执行过程"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://redisdoc.com/topic/index.html" target="_blank" rel="noopener">Redis 命令参考——功能文档</a><br><a href="http://redisbook.com/preview/script/init_lua_env.html" target="_blank" rel="noopener">创建并修改 Lua 环境</a><br><a href="https://redisbook.readthedocs.io/en/latest/feature/scripting.html#id1" target="_blank" rel="noopener">Lua 脚本</a><br><a href="https://redis.io/commands/eval" target="_blank" rel="noopener">Redis 官方文档—— Redis Lua scripting 篇</a></p>
+
           
         
       
