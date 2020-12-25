@@ -99,7 +99,8 @@
 <meta property="og:image" content="http://www.wildmanli.top/images/maven-nexus/nexus-repository.png">
 <meta property="og:image" content="http://www.wildmanli.top/images/maven-nexus/histo-public-repository.png">
 <meta property="og:image" content="http://www.wildmanli.top/images/maven-nexus/central-repository-connection.png">
-<meta property="og:updated_time" content="2020-12-25T08:05:03.079Z">
+<meta property="og:image" content="http://www.wildmanli.top/images/maven-nexus/git-flow.webp">
+<meta property="og:updated_time" content="2020-12-25T10:22:17.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MAVEN 私服（Nexus）">
 <meta name="twitter:description" content="MAVEN 的作用一、项目构建（一）Lifecycle（生命周期） clean lifecycle default lifecycle   validate compile test package：打包 verify install：打包并安装到本地仓库 deploy：打包并部署到远程仓库   site lifecycle  （二）操作指令[清理Class文件]1mvn clean [正常打包]">
@@ -451,6 +452,22 @@
 </li>
 <li><a href="https://www.processon.com/view/link/5fc44bf4079129329897956f" target="_blank" rel="noopener">Nexus 私库与项目连接关系示意图</a><br><img src="/images/maven-nexus/central-repository-connection.png" alt="Nexus 私库与项目连接关系示意图">  </li>
 </ul>
+<h2 id="git-flow流程与版本控制"><a href="#git-flow流程与版本控制" class="headerlink" title="git-flow流程与版本控制"></a>git-flow流程与版本控制</h2><p>⚠️ 图中版本号为错误示例</p>
+<p><img src="/images/maven-nexus/git-flow.webp" alt="git-flow流程与版本控制"></p>
+<ul>
+<li>两个长期分支<ul>
+<li>主分支（master）：对外发布分支，包含稳定的发布版本</li>
+<li>开发分支（develop）：基于 master 分支克隆，包含最新开发版本、最近待发布至下一个release的代码</li>
+</ul>
+</li>
+<li>三种短期分支<ul>
+<li>功能分支（feature/xxx）：基于 develop 分支克隆，用于开发某种特定功能，开发完成后，需要并入develop</li>
+<li>补丁分支（hotfix/xxx）：基于 master 分支克隆，进行生产缺陷修复，修复完成后，并入 master 与 develop 分支</li>
+<li>预发分支（release/xxx）：基于 develop 分支克隆，用于在并入 master 分支，进行正式版发布前，提供预发布（RC）版本进行功能测试。该分支对代码进行了封版，禁止在该分支上进行新功能开发，只允许修复测试出现的bug</li>
+</ul>
+</li>
+<li>标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0.RC1、1.0.0.RC1 或 1.0.0</li>
+</ul>
 
       
     </div>
@@ -620,7 +637,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MAVEN-的作用"><span class="nav-number">1.</span> <span class="nav-text">MAVEN 的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、项目构建"><span class="nav-number">1.1.</span> <span class="nav-text">一、项目构建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）Lifecycle（生命周期）"><span class="nav-number">1.1.1.</span> <span class="nav-text">（一）Lifecycle（生命周期）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（二）操作指令"><span class="nav-number">1.1.2.</span> <span class="nav-text">（二）操作指令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、依赖管理"><span class="nav-number">1.2.</span> <span class="nav-text">二、依赖管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAVEN-环境配置"><span class="nav-number">2.</span> <span class="nav-text">MAVEN 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、查看本地仓库"><span class="nav-number">2.1.</span> <span class="nav-text">一、查看本地仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、远程库环境配置"><span class="nav-number">2.2.</span> <span class="nav-text">二、远程库环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）本地仓库-setting-xml-远程连接配置"><span class="nav-number">2.2.1.</span> <span class="nav-text">（一）本地仓库 setting.xml 远程连接配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（二）项目-pom-xml-远程连接配置"><span class="nav-number">2.2.2.</span> <span class="nav-text">（二）项目 pom.xml 远程连接配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nexus-远程仓库服务介绍"><span class="nav-number">3.</span> <span class="nav-text">Nexus 远程仓库服务介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、私服的工作原理"><span class="nav-number">3.1.</span> <span class="nav-text">一、私服的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、包引入分类"><span class="nav-number">3.2.</span> <span class="nav-text">二、包引入分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、Nexus-仓库类型"><span class="nav-number">3.3.</span> <span class="nav-text">三、Nexus 仓库类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nexus-私库版本发布规约"><span class="nav-number">4.</span> <span class="nav-text">Nexus 私库版本发布规约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、通用规约"><span class="nav-number">4.1.</span> <span class="nav-text">一、通用规约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、远程库推送规约"><span class="nav-number">4.2.</span> <span class="nav-text">二、远程库推送规约</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MAVEN-的作用"><span class="nav-number">1.</span> <span class="nav-text">MAVEN 的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、项目构建"><span class="nav-number">1.1.</span> <span class="nav-text">一、项目构建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）Lifecycle（生命周期）"><span class="nav-number">1.1.1.</span> <span class="nav-text">（一）Lifecycle（生命周期）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（二）操作指令"><span class="nav-number">1.1.2.</span> <span class="nav-text">（二）操作指令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、依赖管理"><span class="nav-number">1.2.</span> <span class="nav-text">二、依赖管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAVEN-环境配置"><span class="nav-number">2.</span> <span class="nav-text">MAVEN 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、查看本地仓库"><span class="nav-number">2.1.</span> <span class="nav-text">一、查看本地仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、远程库环境配置"><span class="nav-number">2.2.</span> <span class="nav-text">二、远程库环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）本地仓库-setting-xml-远程连接配置"><span class="nav-number">2.2.1.</span> <span class="nav-text">（一）本地仓库 setting.xml 远程连接配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（二）项目-pom-xml-远程连接配置"><span class="nav-number">2.2.2.</span> <span class="nav-text">（二）项目 pom.xml 远程连接配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nexus-远程仓库服务介绍"><span class="nav-number">3.</span> <span class="nav-text">Nexus 远程仓库服务介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、私服的工作原理"><span class="nav-number">3.1.</span> <span class="nav-text">一、私服的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、包引入分类"><span class="nav-number">3.2.</span> <span class="nav-text">二、包引入分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、Nexus-仓库类型"><span class="nav-number">3.3.</span> <span class="nav-text">三、Nexus 仓库类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nexus-私库版本发布规约"><span class="nav-number">4.</span> <span class="nav-text">Nexus 私库版本发布规约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、通用规约"><span class="nav-number">4.1.</span> <span class="nav-text">一、通用规约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、远程库推送规约"><span class="nav-number">4.2.</span> <span class="nav-text">二、远程库推送规约</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-flow流程与版本控制"><span class="nav-number">5.</span> <span class="nav-text">git-flow流程与版本控制</span></a></li></ol></div>
             
 
           </div>
