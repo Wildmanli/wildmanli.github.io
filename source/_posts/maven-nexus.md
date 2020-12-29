@@ -271,4 +271,17 @@ mvn deploy
 - [Nexus 私库与项目连接关系示意图](https://www.processon.com/view/link/5fc44bf4079129329897956f)
 ![Nexus 私库与项目连接关系示意图](/images/maven-nexus/central-repository-connection.png)  
 
+## git-flow流程与版本控制
 
+⚠️ 图中版本号为错误示例
+
+![git-flow流程与版本控制](/images/maven-nexus/git-flow.webp)
+
+- 两个长期分支
+    - 主分支（master）：对外发布分支，包含稳定的发布版本
+    - 开发分支（develop）：基于 master 分支克隆，包含最新开发版本、最近待发布至下一个release的代码
+- 三种短期分支
+    - 功能分支（feature/xxx）：基于 develop 分支克隆，用于开发某种特定功能，开发完成后，需要并入develop
+    - 补丁分支（hotfix/xxx）：基于 master 分支克隆，进行生产缺陷修复，修复完成后，并入 master 与 develop 分支
+    - 预发分支（release/xxx）：基于 develop 分支克隆，用于在并入 master 分支，进行正式版发布前，提供预发布（RC）版本进行功能测试。该分支对代码进行了封版，禁止在该分支上进行新功能开发，只允许修复测试出现的bug
+- 标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0.RC1、1.0.0.RC1 或 1.0.0
