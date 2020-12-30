@@ -14,10 +14,10 @@ tags: [Maven,Nexus,一方包,二方包,三方包]
     - validate
     - compile
     - test
-    - package：打包
+    - <font color=blue>package</font>：打包
     - verify
-    - install：打包并安装到本地仓库
-    - deploy：打包并部署到远程仓库  
+    - <font color=blue>install</font>：打包并安装到本地仓库
+    - <font color=blue>deploy</font>：打包并部署到远程仓库  
 ![default lifycycle](/images/maven-nexus/default-lifecycle.png)
 - site lifecycle    
 ![site lifycycle](/images/maven-nexus/site-lifecycle.jpeg)
@@ -65,11 +65,11 @@ mvn deploy
 {% endcodeblock %}
 
 - 版本统一管理（版本冲突解决策略）  
-    - jar包依赖策略：传递依赖  
+    - jar包依赖策略：<font color=blue>传递依赖</font>  
     当A依赖了B、C，如果D依赖了A，则D实际上引入了A、B、C
     - 版本冲突默认策略
-        - 1、最短路径优先：计算依赖传递深度，初始为当前项目
-        - 2、最先申明优先：当依赖深度相同时，取决于pom.xml jar包引入先后顺序  
+        - <font color=blue>最短路径优先</font>：计算依赖传递深度，初始为当前项目
+        - <font color=blue>最先申明优先</font>：当依赖深度相同时，取决于pom.xml jar包引入先后顺序  
     - 指定移除设置  
     {% codeblock [pom.xml] %}
     <dependencies>
@@ -239,7 +239,7 @@ mvn deploy
 
 ### 一、通用规约
 
-- 版本号统一格式：<主版本>.<次版本>.<增量版本>.<代号>
+- 版本号统一格式：<font color=blue><主版本>.<次版本>.<增量版本>.<代号></font>
 - 版本迭代规则：
     - 主版本
         - 大版本可能不兼容小版本
@@ -268,12 +268,12 @@ mvn deploy
     - 推送至与业务相关的远程仓库
 - 非业务（工具）功能发布（二方包）
     - 推送至公司公用远程仓库
-- [Nexus 私库与项目连接关系示意图](https://www.processon.com/view/link/5fc44bf4079129329897956f)
+- [<font color=blue>Nexus 私库与项目连接关系示意图</font>](https://www.processon.com/view/link/5fc44bf4079129329897956f)
 ![Nexus 私库与项目连接关系示意图](/images/maven-nexus/central-repository-connection.png)  
 
 ## git-flow流程与版本控制
 
-⚠️ 图中版本号为错误示例
+⚠️<font color=BurlyWood>图中版本号为错误示例</font>  
 
 ![git-flow流程与版本控制](/images/maven-nexus/git-flow.webp)
 
@@ -284,4 +284,74 @@ mvn deploy
     - 功能分支（feature/xxx）：基于 develop 分支克隆，用于开发某种特定功能，开发完成后，需要并入develop
     - 补丁分支（hotfix/xxx）：基于 master 分支克隆，进行生产缺陷修复，修复完成后，并入 master 与 develop 分支
     - 预发分支（release/xxx）：基于 develop 分支克隆，用于在并入 master 分支，进行正式版发布前，提供预发布（RC）版本进行功能测试。该分支对代码进行了封版，禁止在该分支上进行新功能开发，只允许修复测试出现的bug
-- 标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0.RC1、1.0.0.RC1 或 1.0.0
+- 标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0.RC1、1.0.0.RC1 或 1.0.0  
+
+### 一、版本开发、测试、发布标准流程
+
+假定当前封版背景：
+
+- 线上发布版本 1.0.1
+- <font color=red>预发布运行版本 1.0.0.RC3</font>
+- 长期分支
+    - master：项目版本号：1.0.1
+    - develop：项目版本号：1.1.0.SNAPSHOT
+- 短期分支
+    - release/1.0.0
+    - hotfix/1.0.1
+
+#### （一）功能开发
+- 无未并入 feature 分支
+    - 基于 develop Cherry Pick 出 feature/xxx 分支
+    - 项目版本号延用 develop：1.1.0.SNAPSHOT
+    - 新启 Sprint 功能开发基于 feature/xxx 进行code pr & review
+- 存在未并入 feature/xxx1 分支 （1个并行示例，版本号：1.1.0.SNAPSHOT）
+    - 基于 develop Cherry Pick 出 feature/xxx2 分支
+    - 项目版本号延用 develop：1.1.0.SNAPSHOT
+        - 若 feature/xxx2 预估上线时间晚于 feature/xxx1，视为未来发布功能
+        - 若 feature/xxx2 预估上线时间早于 feature/xxx1, 视为下版本主要功能
+    - 新启 Sprint 功能开发基于 feature/xxx2 进行code pr & review
+
+⚠️<font color=BurlyWood>测试环境（多）持续集成监听对应 feature 分支，用于开发验证</font>  
+
+#### （二）预发布
+
+⚠️<font color=BurlyWood>预发布环境类似线上环境，同时间点仅存在唯一运行版本。即如果存在多个版本并行开发场景，需排队加入预发布（如果条件允许，可考虑合并版本）</font>  
+
+- 基于 develop 创建 release/1.1.0 分支
+- 功能开发分支 feature/xxx 代码合并到 release/1.1.0 分支
+- <font color=blue>调整 release/1.1.0 分支项目版本号为 1.1.0.RC1</font>
+- 添加 标签（tag）：1.1.0.RC1
+- 基于 1.1.0.RC1 tag 进行预发布环境发布
+- 预发布环境功能测试验收
+    - <font color=green>测试验收通过，准备发布上线</font>
+    - 测试验收存在bug
+        - <font color=blue>调整 release/1.1.0 分支 项目版本号为：1.1.0.RC2</font>
+        - 修复内容并入 release/1.1.0 分支
+            - 基于 feature/xxx 功能开发分支进行 bug修复
+            - 修复完成后并入 release/1.1.0 分支
+        - 进行标签添加（版本号递增，例如：1.1.0.RC2）、预发布环境更新、测试验收，直至通过
+    - <font color=red>存在功能性问题（功能不可用、功能缺失等），终止并回退预发布，重新进入功能开发阶段</font>  
+
+#### （三）上线发布
+
+- <font color=blue>调整 release/1.1.0 分支项目版本号为：1.1.0</font>
+- 将 release/1.1.0 分支代码并入 master 分支
+    - 进行标签（tag）添加 1.1.0
+    - 基于 master 分支（或者 tag 1.1.0）完成上线发布
+- 将 release/1.1.0 分支代码并入 develop 分支
+- <font color=blue>调整 develop 分支项目版本号为下个主要功能的版本号：1.2.0.SNAPSHOT</font>  
+
+⚠️<font color=BurlyWood>develop 分支项目版本号总是指向下一个主要功能版本，基于以上示例，思考下个版本号为 1.2.0.SNAPSHOT 的含义？</font>  
+
+### 二、线上Bug紧急修复处理（打补丁）
+
+⚠️<font color=BurlyWood>打补丁：对正式版本（线上运行版本）进行bug修复。并非每个线上bug都需要打补丁，对于不紧急bug，可以随下个功能开发版本修复发布</font> 
+
+假定需要对正式版本 1.1.0 打补丁：  
+- 基于 master 分支，新建修复补丁分支 hotfix/1.1.1
+- <font color=blue>调整 hotfix/1.1.1 分支项目版本号为 1.1.1.SNAPSHOT</font>
+- 基于 hotfix/1.1.1 完成生产缺陷修复
+- 修复完成后, <font color=blue>调整 hotfix/1.1.1 分支项目版本号为 1.1.1</font>，并入 master 分支，添加 tag 1.1.1 以及上线发布
+- 合并 hotfix/1.1.1 分支代码至 develop（此时必定产生项目版本号冲突——处理策略：采用 develop 项目版本号）
+
+⚠️<font color=BurlyWood>feature 功能分支需保持与 develop 分支项目代码更新同步</font>  
