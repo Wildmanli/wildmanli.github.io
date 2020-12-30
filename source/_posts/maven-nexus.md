@@ -1,7 +1,7 @@
 ---
-title: MAVEN 私服（Nexus）
+title: MAVEN 私服（Nexus）与 版本控制
 date: 2020-12-23 14:35:00
-tags: [Maven,Nexus,一方包,二方包,三方包]
+tags: [Maven,Nexus,一方包,二方包,三方包,git-flow,版本控制]
 ---
 ## MAVEN 的作用
 
@@ -261,7 +261,7 @@ mvn deploy
     - 嵌入工程项目
         - pom.xml引入版本
         - 完成工程配置，例如：过滤器配置
-        - 开放端口处理
+        - 开放接口处理
 
 ### 二、远程库推送规约
 - 业务功能发布（一方包）
