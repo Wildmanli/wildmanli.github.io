@@ -309,10 +309,10 @@
 <li>validate</li>
 <li>compile</li>
 <li>test</li>
-<li>package：打包</li>
+<li><font color="blue">package</font>：打包</li>
 <li>verify</li>
-<li>install：打包并安装到本地仓库</li>
-<li>deploy：打包并部署到远程仓库<br><img src="/images/maven-nexus/default-lifecycle.png" alt="default lifycycle"></li>
+<li><font color="blue">install</font>：打包并安装到本地仓库</li>
+<li><font color="blue">deploy</font>：打包并部署到远程仓库<br><img src="/images/maven-nexus/default-lifecycle.png" alt="default lifycycle"></li>
 </ul>
 </li>
 <li>site lifecycle<br><img src="/images/maven-nexus/site-lifecycle.jpeg" alt="site lifycycle"></li>
@@ -329,10 +329,10 @@
 </li>
 <li><p>版本统一管理（版本冲突解决策略）  </p>
 <ul>
-<li>jar包依赖策略：传递依赖<br>当A依赖了B、C，如果D依赖了A，则D实际上引入了A、B、C</li>
+<li>jar包依赖策略：<font color="blue">传递依赖</font><br>当A依赖了B、C，如果D依赖了A，则D实际上引入了A、B、C</li>
 <li>版本冲突默认策略<ul>
-<li>1、最短路径优先：计算依赖传递深度，初始为当前项目</li>
-<li>2、最先申明优先：当依赖深度相同时，取决于pom.xml jar包引入先后顺序  </li>
+<li><font color="blue">最短路径优先</font>：计算依赖传递深度，初始为当前项目</li>
+<li><font color="blue">最先申明优先</font>：当依赖深度相同时，取决于pom.xml jar包引入先后顺序  </li>
 </ul>
 </li>
 <li>指定移除设置  <figure class="highlight plain"><figcaption><span>[pom.xml]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-autoconfigure&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.3.4.RELEASE&lt;/version&gt;</span><br><span class="line">            &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">            &lt;classifier&gt;sources&lt;/classifier&gt;</span><br><span class="line">            &lt;type&gt;jar.md5&lt;/type&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                    &lt;exclusion&gt;</span><br><span class="line">                        &lt;groupId&gt;histo&lt;/groupId&gt;</span><br><span class="line">                        &lt;artifactId&gt;histo&lt;/artifactId&gt;</span><br><span class="line">                    &lt;/exclusion&gt;</span><br><span class="line">                &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
@@ -390,7 +390,7 @@
 <p><img src="/images/maven-nexus/nexus-repository.png" alt="Nexus Repository"></p>
 <p><img src="/images/maven-nexus/histo-public-repository.png" alt="组仓库"></p>
 <h2 id="Nexus-私库版本发布规约"><a href="#Nexus-私库版本发布规约" class="headerlink" title="Nexus 私库版本发布规约"></a>Nexus 私库版本发布规约</h2><h3 id="一、通用规约"><a href="#一、通用规约" class="headerlink" title="一、通用规约"></a>一、通用规约</h3><ul>
-<li>版本号统一格式：&lt;主版本&gt;.&lt;次版本&gt;.&lt;增量版本&gt;.&lt;代号&gt;</li>
+<li>版本号统一格式：<font color="blue">&lt;主版本&gt;.&lt;次版本&gt;.&lt;增量版本&gt;.&lt;代号&gt;</font></li>
 <li>版本迭代规则：<ul>
 <li>主版本<ul>
 <li>大版本可能不兼容小版本</li>
@@ -439,9 +439,9 @@
 <li>推送至公司公用远程仓库</li>
 </ul>
 </li>
-<li><a href="https://www.processon.com/view/link/5fc44bf4079129329897956f" target="_blank" rel="noopener">Nexus 私库与项目连接关系示意图</a><br><img src="/images/maven-nexus/central-repository-connection.png" alt="Nexus 私库与项目连接关系示意图">  </li>
+<li><a href="https://www.processon.com/view/link/5fc44bf4079129329897956f" target="_blank" rel="noopener"><font color="blue">Nexus 私库与项目连接关系示意图</font></a><br><img src="/images/maven-nexus/central-repository-connection.png" alt="Nexus 私库与项目连接关系示意图">  </li>
 </ul>
-<h2 id="git-flow流程与版本控制"><a href="#git-flow流程与版本控制" class="headerlink" title="git-flow流程与版本控制"></a>git-flow流程与版本控制</h2><p>⚠️ 图中版本号为错误示例</p>
+<h2 id="git-flow流程与版本控制"><a href="#git-flow流程与版本控制" class="headerlink" title="git-flow流程与版本控制"></a>git-flow流程与版本控制</h2><p>⚠️ <font color="BurlyWood">图中版本号为错误示例</font>  </p>
 <p><img src="/images/maven-nexus/git-flow.webp" alt="git-flow流程与版本控制"></p>
 <ul>
 <li>两个长期分支<ul>
@@ -455,9 +455,63 @@
 <li>预发分支（release/xxx）：基于 develop 分支克隆，用于在并入 master 分支，进行正式版发布前，提供预发布（RC）版本进行功能测试。该分支对代码进行了封版，禁止在该分支上进行新功能开发，只允许修复测试出现的bug</li>
 </ul>
 </li>
-<li>标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0.RC1、1.0.0.RC1 或 1.0.0</li>
+<li>标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0.RC1、1.0.0.RC1 或 1.0.0  </li>
 </ul>
+<h3 id="一、版本开发、测试、发布标准流程"><a href="#一、版本开发、测试、发布标准流程" class="headerlink" title="一、版本开发、测试、发布标准流程"></a>一、版本开发、测试、发布标准流程</h3><p>当前封版背景：</p>
+<ul>
+<li>线上发布版本 1.0.1</li>
+<li>预发布运行版本 1.0.1.RC3</li>
+<li>长期分支<ul>
+<li>master：项目版本号：1.0.1</li>
+<li>develop：项目版本号：1.0.2.SNAPSHOT</li>
+</ul>
+</li>
+<li>短期分支<ul>
+<li>release/1.0.1  </li>
+</ul>
+</li>
+</ul>
+<h4 id="（一）功能开发"><a href="#（一）功能开发" class="headerlink" title="（一）功能开发"></a>（一）功能开发</h4><ul>
+<li>无未并入 feature 分支<ul>
+<li>基于 develop Cherry Pick 出 feature/xxx 分支</li>
+<li>项目版本号延用 develop：1.0.2.SNAPSHOT</li>
+<li>新启 Sprint 功能开发基于 feature/xxx 进行code pr &amp; review</li>
+</ul>
+</li>
+<li>存在未并入 feature/xxx1 分支 （1个并行示例，版本号：1.0.2.SNAPSHOT）<ul>
+<li>基于 develop Cherry Pick 出 feature/xxx2 分支</li>
+<li>项目版本号延用 develop：1.0.2.SNAPSHOT<ul>
+<li>若 feature/xxx2 预估上线时间晚于 feature/xxx1，视为未来发布功能</li>
+<li>若 feature/xxx2 预估上线时间早于 feature/xxx1, 视为下版本主要功能</li>
+</ul>
+</li>
+<li>新启 Sprint 功能开发基于 feature/xxx2 进行code pr &amp; review</li>
+</ul>
+</li>
+</ul>
+<p>⚠️ <font color="BurlyWood">测试环境（多）持续集成监听对应 feature 分支，用于开发验证</font>  </p>
+<h4 id="（二）预发布"><a href="#（二）预发布" class="headerlink" title="（二）预发布"></a>（二）预发布</h4><p>⚠️ <font color="BurlyWood">预发布环境类似线上环境，同时间点仅存在唯一运行版本。即如果存在多个版本并行开发场景，需排队加入预发布（如果条件允许，可考虑合并版本）</font>  </p>
+<ul>
+<li>基于 develop 创建 release/1.0.2 分支</li>
+<li>功能开发分支 feature/xxx 代码合并到 release/1.0.2 分支</li>
+<li><font color="blue">调整 release/1.0.2 分支项目版本号为 1.0.2.RC1</font></li>
+<li>添加 标签（tag）：1.0.2.RC1</li>
+<li>基于 1.0.2.RC1 tag 进行预发布环境发布</li>
+<li>预发布环境功能测试验收<ul>
+<li><font color="green">测试验收通过，准备发布上线</font></li>
+<li>测试验收存在bug，基于 release/1.0.2 分支进行bug修复<ul>
+<li><font color="blue">调整 release/1.0.2 分支 项目版本号为：1.0.2.RC2</font></li>
+<li>修复内容提交至 release/1.0.2 分支</li>
+<li>修复完成，进行标签添加（版本号递增，例如：1.0.2.RC2）、预发布环境更新、测试验收，直至通过</li>
+</ul>
+</li>
+<li><font color="red">存在功能性问题（功能不可用、功能缺失等），终止并回退预发布，重新进入功能开发阶段</font>  
 
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="（三）上线发布"><a href="#（三）上线发布" class="headerlink" title="（三）上线发布"></a>（三）上线发布</h4>
           
         
       
