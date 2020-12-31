@@ -239,7 +239,7 @@ mvn deploy
 
 ### 一、通用规约
 
-- 版本号统一格式：<font color=blue><主版本>.<次版本>.<增量版本>.<代号></font>
+- 版本号统一格式：<font color=blue><主版本>.<次版本>.<增量版本>-<代号></font>
 - 版本迭代规则：
     - 主版本
         - 大版本可能不兼容小版本
@@ -251,9 +251,9 @@ mvn deploy
         - 大版本兼容支持小版本
         - 版本号从 0 开始，每次递增 1。例如：由 1.0.0 迭代至 1.0.1
     - 代号
-        - SNAPSHOT：不稳定版本，处于开发阶段，代码可能随时变化，例如：1.1.12.SNAPSHOT
-        - RCx：稳定版本，处于预发布阶段，代码实现了全部功能，并清除了大部分bug，接近正式发布。x 是数字，表示预发布版本迭代，初始为 1，例如：1.1.12.RC1、1.1.12.RC2
-        - RELEASE/去除代号：稳定版本，为正式发布版本。我们采用去除代号方式，例如：用 1.1.12 而不用 1.1.12.RELEASE
+        - SNAPSHOT：不稳定版本，处于开发阶段，代码可能随时变化，例如：1.1.12-SNAPSHOT
+        - RCx：稳定版本，处于预发布阶段，代码实现了全部功能，并清除了大部分bug，接近正式发布。x 是数字，表示预发布版本迭代，初始为 1，例如：1.1.12-RC1、1.1.12-RC2
+        - RELEASE/去除代号：稳定版本，为正式发布版本。我们采用去除代号方式，例如：用 1.1.12 而不用 1.1.12-RELEASE
 - 版本可用性基本原则：
     - 开箱即用
         - pom.xml引入版本
@@ -284,17 +284,17 @@ mvn deploy
     - 功能分支（feature/xxx）：基于 develop 分支克隆，用于开发某种特定功能，开发完成后，需要并入develop
     - 补丁分支（hotfix/xxx）：基于 master 分支克隆，进行生产缺陷修复，修复完成后，并入 master 与 develop 分支
     - 预发分支（release/xxx）：基于 develop 分支克隆，用于在并入 master 分支，进行正式版发布前，提供预发布（RC）版本进行功能测试。该分支对代码进行了封版，禁止在该分支上进行新功能开发，只允许修复测试出现的bug
-- 标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0.RC1、1.0.0.RC1 或 1.0.0  
+- 标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0-RC1、1.0.0-RC2 或 1.0.0  
 
 ### 一、版本开发、测试、发布标准流程
 
 假定当前封版背景：
 
 - 线上发布版本 1.0.1
-- <font color=red>预发布运行版本 1.0.0.RC3</font>
+- <font color=red>预发布运行版本 1.0.0-RC3</font>
 - 长期分支
     - master：项目版本号：1.0.1
-    - develop：项目版本号：1.1.0.SNAPSHOT
+    - develop：项目版本号：1.1.0-SNAPSHOT
 - 短期分支
     - release/1.0.0
     - hotfix/1.0.1
@@ -302,11 +302,11 @@ mvn deploy
 #### （一）功能开发
 - 无未并入 feature 分支
     - 基于 develop Cherry Pick 出 feature/xxx 分支
-    - 项目版本号延用 develop：1.1.0.SNAPSHOT
+    - 项目版本号延用 develop：1.1.0-SNAPSHOT
     - 新启 Sprint 功能开发基于 feature/xxx 进行code pr & review
-- 存在未并入 feature/xxx1 分支 （1个并行示例，版本号：1.1.0.SNAPSHOT）
+- 存在未并入 feature/xxx1 分支 （1个并行示例，版本号：1.1.0-SNAPSHOT）
     - 基于 develop Cherry Pick 出 feature/xxx2 分支
-    - 项目版本号延用 develop：1.1.0.SNAPSHOT
+    - 项目版本号延用 develop：1.1.0-SNAPSHOT
         - 若 feature/xxx2 预估上线时间晚于 feature/xxx1，视为未来发布功能
         - 若 feature/xxx2 预估上线时间早于 feature/xxx1, 视为下版本主要功能
     - 新启 Sprint 功能开发基于 feature/xxx2 进行code pr & review
@@ -319,17 +319,17 @@ mvn deploy
 
 - 基于 develop 创建 release/1.1.0 分支
 - 功能开发分支 feature/xxx 代码合并到 release/1.1.0 分支
-- <font color=blue>调整 release/1.1.0 分支项目版本号为 1.1.0.RC1</font>
-- 添加 标签（tag）：1.1.0.RC1
-- 基于 1.1.0.RC1 tag 进行预发布环境发布
+- <font color=blue>调整 release/1.1.0 分支项目版本号为 1.1.0-RC1</font>
+- 添加 标签（tag）：1.1.0-RC1
+- 基于 1.1.0-RC1 tag 进行预发布环境发布
 - 预发布环境功能测试验收
     - <font color=green>测试验收通过，准备发布上线</font>
     - 测试验收存在bug
-        - <font color=blue>调整 release/1.1.0 分支 项目版本号为：1.1.0.RC2</font>
+        - <font color=blue>调整 release/1.1.0 分支 项目版本号为：1.1.0-RC2</font>
         - 修复内容并入 release/1.1.0 分支
             - 基于 feature/xxx 功能开发分支进行 bug修复
             - 修复完成后并入 release/1.1.0 分支
-        - 进行标签添加（版本号递增，例如：1.1.0.RC2）、预发布环境更新、测试验收，直至通过
+        - 进行标签添加（版本号递增，例如：1.1.0-RC2）、预发布环境更新、测试验收，直至通过
     - <font color=red>存在功能性问题（功能不可用、功能缺失等），终止并回退预发布，重新进入功能开发阶段</font>  
 
 #### （三）上线发布
@@ -339,9 +339,9 @@ mvn deploy
     - 进行标签（tag）添加 1.1.0
     - 基于 master 分支（或者 tag 1.1.0）完成上线发布
 - 将 release/1.1.0 分支代码并入 develop 分支
-- <font color=blue>调整 develop 分支项目版本号为下个主要功能的版本号：1.2.0.SNAPSHOT</font>  
+- <font color=blue>调整 develop 分支项目版本号为下个主要功能的版本号：1.2.0-SNAPSHOT</font>  
 
-⚠️<font color=BurlyWood>develop 分支项目版本号总是指向下一个主要功能版本，基于以上示例，思考下个版本号为 1.2.0.SNAPSHOT 的含义？</font>  
+⚠️<font color=BurlyWood>develop 分支项目版本号总是指向下一个主要功能版本，基于以上示例，思考下个版本号为 1.2.0-SNAPSHOT 的含义？</font>  
 
 ### 二、线上Bug紧急修复处理（打补丁）
 
@@ -349,7 +349,7 @@ mvn deploy
 
 假定需要对正式版本 1.1.0 打补丁：  
 - 基于 master 分支，新建修复补丁分支 hotfix/1.1.1
-- <font color=blue>调整 hotfix/1.1.1 分支项目版本号为 1.1.1.SNAPSHOT</font>
+- <font color=blue>调整 hotfix/1.1.1 分支项目版本号为 1.1.1-SNAPSHOT</font>
 - 基于 hotfix/1.1.1 完成生产缺陷修复
 - 修复完成后, <font color=blue>调整 hotfix/1.1.1 分支项目版本号为 1.1.1</font>，并入 master 分支，添加 tag 1.1.1 以及上线发布
 - 合并 hotfix/1.1.1 分支代码至 develop（此时必定产生项目版本号冲突——处理策略：采用 develop 项目版本号）
