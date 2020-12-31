@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://www.wildmanli.top/images/maven-nexus/histo-public-repository.png">
 <meta property="og:image" content="http://www.wildmanli.top/images/maven-nexus/central-repository-connection.png">
 <meta property="og:image" content="http://www.wildmanli.top/images/maven-nexus/git-flow.webp">
-<meta property="og:updated_time" content="2020-12-30T05:48:11.838Z">
+<meta property="og:updated_time" content="2020-12-31T06:40:18.517Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MAVEN 私服（Nexus）与 版本控制">
 <meta name="twitter:description" content="MAVEN 的作用一、项目构建（一）Lifecycle（生命周期） clean lifecycle default lifecycle   validate compile test package：打包 verify install：打包并安装到本地仓库 deploy：打包并部署到远程仓库   site lifecycle  （二）操作指令[清理Class文件]1mvn clean [正常打包]">
@@ -401,7 +401,7 @@
 <p><img src="/images/maven-nexus/nexus-repository.png" alt="Nexus Repository"></p>
 <p><img src="/images/maven-nexus/histo-public-repository.png" alt="组仓库"></p>
 <h2 id="Nexus-私库版本发布规约"><a href="#Nexus-私库版本发布规约" class="headerlink" title="Nexus 私库版本发布规约"></a>Nexus 私库版本发布规约</h2><h3 id="一、通用规约"><a href="#一、通用规约" class="headerlink" title="一、通用规约"></a>一、通用规约</h3><ul>
-<li>版本号统一格式：<font color="blue">&lt;主版本&gt;.&lt;次版本&gt;.&lt;增量版本&gt;.&lt;代号&gt;</font></li>
+<li>版本号统一格式：<font color="blue">&lt;主版本&gt;.&lt;次版本&gt;.&lt;增量版本&gt;-&lt;代号&gt;</font></li>
 <li>版本迭代规则：<ul>
 <li>主版本<ul>
 <li>大版本可能不兼容小版本</li>
@@ -419,9 +419,9 @@
 </ul>
 </li>
 <li>代号<ul>
-<li>SNAPSHOT：不稳定版本，处于开发阶段，代码可能随时变化，例如：1.1.12.SNAPSHOT</li>
-<li>RCx：稳定版本，处于预发布阶段，代码实现了全部功能，并清除了大部分bug，接近正式发布。x 是数字，表示预发布版本迭代，初始为 1，例如：1.1.12.RC1、1.1.12.RC2</li>
-<li>RELEASE/去除代号：稳定版本，为正式发布版本。我们采用去除代号方式，例如：用 1.1.12 而不用 1.1.12.RELEASE</li>
+<li>SNAPSHOT：不稳定版本，处于开发阶段，代码可能随时变化，例如：1.1.12-SNAPSHOT</li>
+<li>RCx：稳定版本，处于预发布阶段，代码实现了全部功能，并清除了大部分bug，接近正式发布。x 是数字，表示预发布版本迭代，初始为 1，例如：1.1.12-RC1、1.1.12-RC2</li>
+<li>RELEASE/去除代号：稳定版本，为正式发布版本。我们采用去除代号方式，例如：用 1.1.12 而不用 1.1.12-RELEASE</li>
 </ul>
 </li>
 </ul>
@@ -466,15 +466,15 @@
 <li>预发分支（release/xxx）：基于 develop 分支克隆，用于在并入 master 分支，进行正式版发布前，提供预发布（RC）版本进行功能测试。该分支对代码进行了封版，禁止在该分支上进行新功能开发，只允许修复测试出现的bug</li>
 </ul>
 </li>
-<li>标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0.RC1、1.0.0.RC1 或 1.0.0  </li>
+<li>标签（tag）：预发布以及稳定版本发布需要添加对应版本标识。例如：1.0.0-RC1、1.0.0-RC2 或 1.0.0  </li>
 </ul>
 <h3 id="一、版本开发、测试、发布标准流程"><a href="#一、版本开发、测试、发布标准流程" class="headerlink" title="一、版本开发、测试、发布标准流程"></a>一、版本开发、测试、发布标准流程</h3><p>假定当前封版背景：</p>
 <ul>
 <li>线上发布版本 1.0.1</li>
-<li><font color="red">预发布运行版本 1.0.0.RC3</font></li>
+<li><font color="red">预发布运行版本 1.0.0-RC3</font></li>
 <li>长期分支<ul>
 <li>master：项目版本号：1.0.1</li>
-<li>develop：项目版本号：1.1.0.SNAPSHOT</li>
+<li>develop：项目版本号：1.1.0-SNAPSHOT</li>
 </ul>
 </li>
 <li>短期分支<ul>
@@ -486,13 +486,13 @@
 <h4 id="（一）功能开发"><a href="#（一）功能开发" class="headerlink" title="（一）功能开发"></a>（一）功能开发</h4><ul>
 <li>无未并入 feature 分支<ul>
 <li>基于 develop Cherry Pick 出 feature/xxx 分支</li>
-<li>项目版本号延用 develop：1.1.0.SNAPSHOT</li>
+<li>项目版本号延用 develop：1.1.0-SNAPSHOT</li>
 <li>新启 Sprint 功能开发基于 feature/xxx 进行code pr &amp; review</li>
 </ul>
 </li>
-<li>存在未并入 feature/xxx1 分支 （1个并行示例，版本号：1.1.0.SNAPSHOT）<ul>
+<li>存在未并入 feature/xxx1 分支 （1个并行示例，版本号：1.1.0-SNAPSHOT）<ul>
 <li>基于 develop Cherry Pick 出 feature/xxx2 分支</li>
-<li>项目版本号延用 develop：1.1.0.SNAPSHOT<ul>
+<li>项目版本号延用 develop：1.1.0-SNAPSHOT<ul>
 <li>若 feature/xxx2 预估上线时间晚于 feature/xxx1，视为未来发布功能</li>
 <li>若 feature/xxx2 预估上线时间早于 feature/xxx1, 视为下版本主要功能</li>
 </ul>
@@ -506,19 +506,19 @@
 <ul>
 <li>基于 develop 创建 release/1.1.0 分支</li>
 <li>功能开发分支 feature/xxx 代码合并到 release/1.1.0 分支</li>
-<li><font color="blue">调整 release/1.1.0 分支项目版本号为 1.1.0.RC1</font></li>
-<li>添加 标签（tag）：1.1.0.RC1</li>
-<li>基于 1.1.0.RC1 tag 进行预发布环境发布</li>
+<li><font color="blue">调整 release/1.1.0 分支项目版本号为 1.1.0-RC1</font></li>
+<li>添加 标签（tag）：1.1.0-RC1</li>
+<li>基于 1.1.0-RC1 tag 进行预发布环境发布</li>
 <li>预发布环境功能测试验收<ul>
 <li><font color="green">测试验收通过，准备发布上线</font></li>
 <li>测试验收存在bug<ul>
-<li><font color="blue">调整 release/1.1.0 分支 项目版本号为：1.1.0.RC2</font></li>
+<li><font color="blue">调整 release/1.1.0 分支 项目版本号为：1.1.0-RC2</font></li>
 <li>修复内容并入 release/1.1.0 分支<ul>
 <li>基于 feature/xxx 功能开发分支进行 bug修复</li>
 <li>修复完成后并入 release/1.1.0 分支</li>
 </ul>
 </li>
-<li>进行标签添加（版本号递增，例如：1.1.0.RC2）、预发布环境更新、测试验收，直至通过</li>
+<li>进行标签添加（版本号递增，例如：1.1.0-RC2）、预发布环境更新、测试验收，直至通过</li>
 </ul>
 </li>
 <li><font color="red">存在功能性问题（功能不可用、功能缺失等），终止并回退预发布，重新进入功能开发阶段</font>  
@@ -535,16 +535,16 @@
 </ul>
 </li>
 <li>将 release/1.1.0 分支代码并入 develop 分支</li>
-<li><font color="blue">调整 develop 分支项目版本号为下个主要功能的版本号：1.2.0.SNAPSHOT</font>  
+<li><font color="blue">调整 develop 分支项目版本号为下个主要功能的版本号：1.2.0-SNAPSHOT</font>  
 
 </li>
 </ul>
-<p>⚠️<font color="BurlyWood">develop 分支项目版本号总是指向下一个主要功能版本，基于以上示例，思考下个版本号为 1.2.0.SNAPSHOT 的含义？</font>  </p>
+<p>⚠️<font color="BurlyWood">develop 分支项目版本号总是指向下一个主要功能版本，基于以上示例，思考下个版本号为 1.2.0-SNAPSHOT 的含义？</font>  </p>
 <h3 id="二、线上Bug紧急修复处理（打补丁）"><a href="#二、线上Bug紧急修复处理（打补丁）" class="headerlink" title="二、线上Bug紧急修复处理（打补丁）"></a>二、线上Bug紧急修复处理（打补丁）</h3><p>⚠️<font color="BurlyWood">打补丁：对正式版本（线上运行版本）进行bug修复。并非每个线上bug都需要打补丁，对于不紧急bug，可以随下个功能开发版本修复发布</font> </p>
 <p>假定需要对正式版本 1.1.0 打补丁：  </p>
 <ul>
 <li>基于 master 分支，新建修复补丁分支 hotfix/1.1.1</li>
-<li><font color="blue">调整 hotfix/1.1.1 分支项目版本号为 1.1.1.SNAPSHOT</font></li>
+<li><font color="blue">调整 hotfix/1.1.1 分支项目版本号为 1.1.1-SNAPSHOT</font></li>
 <li>基于 hotfix/1.1.1 完成生产缺陷修复</li>
 <li>修复完成后, <font color="blue">调整 hotfix/1.1.1 分支项目版本号为 1.1.1</font>，并入 master 分支，添加 tag 1.1.1 以及上线发布</li>
 <li>合并 hotfix/1.1.1 分支代码至 develop（此时必定产生项目版本号冲突——处理策略：采用 develop 项目版本号）</li>
