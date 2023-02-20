@@ -101,6 +101,3 @@ hexo clean
 
 在某些情况（尤其是更换主题后），如果发现您对站点的更改无论如何也不生效，您可能需要运行该命令。
 ### 7）[更多命令](https://hexo.io/zh-cn/docs/commands)
-1. 先启动`redis`、`mysql`、`nacos`、`sentinel`等基础服务
-2. 启动除`ecp-gateway`之外的项目
-3. 最后启动`ecp-gateway`
