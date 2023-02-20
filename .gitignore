@@ -8,3 +8,4 @@ public/
 themes/
 .idea/
 .deploy_git/
+package-lock.json
