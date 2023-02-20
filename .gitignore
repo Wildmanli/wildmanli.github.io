@@ -5,7 +5,6 @@ db.json
 node_modules/
 public/
 .deploy/
-themes/
 .idea/
 .deploy_git/
 package-lock.json
